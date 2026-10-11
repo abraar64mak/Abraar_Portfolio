@@ -2,17 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: dark; }
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
-body {
-  @apply bg-ink-950 text-slate-300 font-sans antialiased;
-  overflow-x: hidden;
+:root {
+  --paper: #f4f2ee; --card: #fff; --ink: #0d0d0d; --ink-2: #3a3a3a; --mute: #77756f; --faint: #a9a6a0;
+  --line: rgba(13, 13, 13, 0.1); --soft: #e9e6e0; --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: clamp(18px, 4vw, 64px);
+  color-scheme: light;
 }
-::selection { background: rgba(34, 211, 238, 0.3); color: #fff; }
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: #050912; }
-::-webkit-scrollbar-thumb { background: #16233a; border-radius: 8px; }
-::-webkit-scrollbar-thumb:hover { background: #22d3ee55; }
+html { background: var(--paper); }
+body { @apply bg-paper font-sans text-ink antialiased; overflow-x: hidden; }
+::selection { background: var(--ink); color: var(--paper); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.dark-scope :focus-visible { outline-color: #22d3ee; }
+
+@layer base {
+  a, button { color: inherit; }
+  h1, h2, h3 { @apply font-sans; }
+}
+
+/* ---------- light design system ---------- */
+.wrap { max-width: 1320px; margin: 0 auto; padding-inline: var(--gutter); }
+.section { padding-block: clamp(96px, 14vh, 160px); }
+.h2 { font-weight: 700; letter-spacing: -0.045em; line-height: 1; font-size: clamp(2.4rem, 6vw, 4.6rem); }
+.h2 em, .serif-accent { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--mute); letter-spacing: -0.02em; }
+.tag { font-family: 'JetBrains Mono Variable', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
+.card-l { background: var(--card); border-radius: 26px; box-shadow: inset 0 0 0 1px var(--line); }
+.pill { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 999px; padding: 0.8rem 1.35rem; font-size: 14px; font-weight: 600; transition: transform 0.5s var(--ease), background 0.3s, color 0.3s, box-shadow 0.3s; }
+.pill:hover { transform: translateY(-2px); }
+.pill-solid { background: var(--ink); color: #fff; }
+.pill-solid:hover { background: #2a2a2a; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); }
+.pill-line { box-shadow: inset 0 0 0 1px rgba(13, 13, 13, 0.2); background: transparent; }
+.pill-line:hover { background: var(--ink); color: #fff; }
+
+/* reveal on scroll */
+.rv { opacity: 0; transform: translateY(24px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }
+.rv.is-in { opacity: 1; transform: none; }
+.rv-mask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.rv-mask > span { display: inline-block; transform: translateY(108%); transition: transform 1s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
+.rv-mask.is-in > span { transform: none; }
+
+.ecg-draw { stroke-dasharray: 2600; animation: draw 7s linear infinite; }
+.hop { display: inline-block; }
+.hop:hover { animation: hop 0.55s var(--ease); }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
 
 @layer components {
   .glass {
@@ -74,3 +105,10 @@ body {
     linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
   background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .rv, .rv-mask > span { opacity: 1 !important; transform: none !important; }
+  .ecg-draw { animation: none; stroke-dasharray: none; }
+}
+
+@keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }

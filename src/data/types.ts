@@ -31,5 +31,5 @@ export interface Project {
   badge?: string
 }
 
-export type Domain = 'AI / ML' | 'Data Engineering' | 'Frameworks & Languages' | 'Systems Architecture'
-export interface Skill { name: string; domain: Domain; note: string }
+export type Family = 'Languages' | 'AI & LLM Systems' | 'Backend & Data' | 'Cloud & DevOps' | 'AI-Assisted Dev'
+export interface Skill { name: string; family: Family; symbol: string; note: string }

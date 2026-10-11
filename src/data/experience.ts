@@ -111,8 +111,8 @@ export const experience: Experience[] = [
     impact: 'Better search precision and a faster, better-documented backend for enterprise customers across regions.',
   },
   {
-    id: 'rec',
-    org: 'Rajalakshmi Engineering College',
+    id: 'anna',
+    org: 'Anna University',
     role: 'Undergraduate Researcher · AI & Machine Learning',
     period: '2023',
     location: 'Chennai, India',

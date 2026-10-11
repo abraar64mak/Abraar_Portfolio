@@ -22,7 +22,7 @@ export const papers: Paper[] = [
     indexing: ['Scopus', 'INSPEC', 'WTI Frankfurt eG', 'zbMATH', 'SCImago'],
     award: 'Best Paper Award',
     authors: ['Sowmia K R', 'Jayaganeshan T', 'Mohammed Abraar Khan F', 'Madhesh S', 'Kabilesh S'],
-    affiliation: 'Dept. of Artificial Intelligence and Machine Learning, Rajalakshmi Engineering College, Chennai',
+    affiliation: 'Department of Artificial Intelligence and Machine Learning, Anna University, Chennai',
     keywords: ['posture estimation', 'biometrics', 'MediaPipe', 'computer vision', 'performance'],
     summary:
       'A pose-estimation system that scores exercise form from motion and camera data, counts reps and warns the user when posture drifts toward injury risk. Four classifiers were benchmarked; Ridge and Random Forest reached 96.72% accuracy.',
@@ -36,7 +36,7 @@ export const papers: Paper[] = [
     indexing: ['Scopus'],
     award: 'Best Paper Award',
     authors: ['Sowmia K R', 'Madhesh S', 'Harinath B', 'Nishanth G', 'Mohammed Abraar Khan F'],
-    affiliation: 'Dept. of Artificial Intelligence and Machine Learning, Rajalakshmi Engineering College, Chennai',
+    affiliation: 'Department of Artificial Intelligence and Machine Learning, Anna University, Chennai',
     keywords: ['healthcare', 'fetal health', 'CNN', 'artificial intelligence'],
     summary:
       'A CNN study for predicting fetal health, comparing 1-, 2- and 3-layer models on accuracy, precision, recall and loss. Accuracy climbed from 88.50% to 91.55% with depth.',

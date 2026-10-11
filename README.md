@@ -1,67 +1,46 @@
-# Abraar Khan — Interactive Healthcare-AI Portfolio
+# Abraar Khan: Healthcare AI Portfolio
 
-An interactive AI-healthcare dashboard portfolio: live ECG landmark detection, working RAG / agent-security / NER demos, research projects with real paper results, and a skills map.
+A quiet, light, premium portfolio with a **talking 3D-avatar hero**, built for healthcare-AI founders and teams.
+Inspired by the "talking-video portfolio" format, adapted with medical-AI touches: a live ECG lab, clinical RAG and agent-security demos, and real results from the two published papers.
 
-**Stack:** React 18 · TypeScript · Vite · Tailwind CSS · Framer Motion · Lucide icons (≈18 KB gzipped app code).
+**Stack:** React 18 · TypeScript · Vite · Tailwind CSS · Lenis (smooth scroll) · self-hosted fonts (Inter Tight, Instrument Serif, JetBrains Mono). Static site, deploys anywhere.
 
-## Run it
+## Run
 
 ```bash
 npm install
 npm run dev        # http://localhost:5173
-npm run build      # type-check + production build → dist/
-npm run preview    # serve the production build locally
+npm run build      # type-check + production build -> dist/
+npm run preview
 ```
 
-## Deploy (static)
+## Add your avatar video
 
-`dist/` is a plain static site (`base: './'`), so it works anywhere.
+The hero shows a soft silhouette until you add your video. Follow **[docs/AVATAR_GUIDE.md](docs/AVATAR_GUIDE.md)**: three steps with ready-to-paste prompts (male voice, your intro line) and one command that builds the seamless loop.
 
-- **Vercel / Netlify:** import the repo. Build command `npm run build`, output directory `dist`.
-- **GitHub Pages:** upload `dist/` (or use a Pages action). Detail views use `#/project/<id>` hashes, so no server rewrites are needed.
+## Sections
 
-## What's inside
+| # | Section | Idea |
+| - | ------- | ---- |
+| – | Hero | Talking-avatar video (loops, sound toggle, pauses off-screen) + ghost name + ECG line + key results |
+| 01 | About | Swinging, flippable lanyard ID card + résumé summary + quick facts |
+| 02 | Skills | "Periodic table" of every skill on the résumé, family filters, real brand logos, "used in" links |
+| 03 | Work | Expanding gallery of 5 projects; the two papers show their real result charts |
+| 04 | Live lab | ECG landmark detector, clinical RAG, SQL firewall, entity tagger, pipeline (simulations) |
+| 05 | Experience | Education + experience as one scroll-drawn path |
+| 06 | Achievements | Pinned horizontal gallery with count-up numbers |
+| 07 | Contact | Email (copy), LinkedIn, GitHub. No phone number is shown anywhere |
 
-A dashboard, not a scrolling page. A sidebar switches between modules (keys `1`–`7`, or `⌘/Ctrl+K` to search anything).
-
-| Module | What it does |
-| --- | --- |
-| **Overview** | Live ECG monitor that detects P/Q/R/S/T landmarks and classifies rhythm (Normal, Tachy, PVC, AFib). Inject a rhythm and watch the classifier react. Also KPI tiles and an animated clinical RAG data-flow graph. |
-| **Clinical Log** | Experience & education. Select an entry to open its case file inline. |
-| **Research Lab** | Projects with architecture flow, metrics, and (for the two papers) interactive result charts. |
-| **AI Lab** | Three working demos: Clinical RAG (keyword vs FAISS vs hybrid, PHI masking), SQL Firewall (try attacks), Entity Tagger. |
-| **Skills Map** | Pick a skill to see which jobs and projects used it. |
-| **Publications** | Both Best Paper publications with real result tables. |
-| **Contact** | Email, LinkedIn, GitHub and a compose form (opens your mail app; nothing is sent to a server). |
-
-There are no pop-up overlays for content. Detail views render inline and every view is deep-linkable (`#/research/beatnet`, `#/lab/firewall`).
-
-## Project structure
-
-```
-src/
-├── data/               ← ALL content lives here (edit these, not the components)
-│   ├── profile.ts      name, summary, links, KPI tiles
-│   ├── experience.ts   clinical-log entries
-│   ├── projects.ts     projects + deep-dive content
-│   ├── papers.ts       publications metadata
-│   ├── charts.ts       result tables transcribed from the papers
-│   └── skills.ts
-├── views/              one file per module
-├── components/         Panel, EcgLab, SystemGraph, BarChart, DetailPane, Sidebar, CommandPalette …
-│   └── demos/          RagDemo, FirewallDemo, NerDemo
-└── hooks/useRoute.ts   hash routing
-```
+There is no Certifications section because the résumé lists none.
 
 ## Editing content
 
-- **Add a project:** append an object to `src/data/projects.ts`. Cards, filters, detail view and deep link appear automatically.
-- **Skill cross-links:** a skill's "Applied in" list are matched by name against each entry's `tags`. Use the same spelling (e.g. `FAISS`).
-- **Colors:** `tailwind.config.js` (`ink`, cyan/teal utilities) and `src/index.css`.
+All content is in `src/data/`: `profile.ts`, `experience.ts`, `projects.ts`, `skills.ts`, `papers.ts`, `charts.ts`.
+The résumé PDF served by the "Résumé ↓" buttons is `public/Abraar_Khan_CV.pdf`. Replace it when you update your CV.
 
-## Things to review before publishing
+## Notes
 
-- **Privacy:** no phone number exists anywhere in the project. Contact is email, LinkedIn and GitHub only.
-- **BeatNet** has no benchmark numbers yet (none were provided). Add real metrics to `projects.ts` when you have them.
-- **Publication links:** the Springer card points to the LNNS series page, and the fetal-health card points to your GitHub. Replace them with the DOI/paper URLs in `projects.ts`.
-- The ECG, RAG, firewall and entity-tagger demos are labelled simulations on synthetic data. They illustrate the ideas and are not runs of the real models.
+- **Honesty:** the Live lab demos run on synthetic data with simple rules and say so on screen. They illustrate the systems and are not runs of the real models. The project visuals in the Work gallery are labelled "Illustrative UI"; the paper charts are transcribed from the papers.
+- **Logos:** brand marks come from [simple-icons](https://simpleicons.org) (CC0) in their official colours. Marks for concepts (RAG, MCP, AWS, Azure…) are Lucide line icons.
+- **Colour:** white, black and grays. The Live lab is a single dark, rounded "instrument" card, and its status colours are the one deliberate exception.
+- **Replace before sending:** the Springer and AIP links point to the publisher series pages. Swap in your paper DOIs in `src/data/projects.ts`.

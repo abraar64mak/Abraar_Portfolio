@@ -54,7 +54,7 @@ export const projects: Project[] = [
       'Accepted in AIP Conference Proceedings, Scopus indexed; won the Best Paper Award.',
       'Systematic layer-depth comparison: accuracy, precision, recall and loss reported side by side.',
     ],
-    links: [{ label: 'Publications (profile)', href: GH, kind: 'paper' }],
+    links: [{ label: 'AIP Conference Proceedings', href: 'https://pubs.aip.org/aip/acp', kind: 'paper' }],
     badge: 'Best Paper',
   },
   {
@@ -134,7 +134,7 @@ export const projects: Project[] = [
       'Indexed in Scopus, INSPEC, WTI Frankfurt eG, zbMATH and SCImago.',
       'Ridge and Random Forest tied at 96.72% accuracy; Logistic Regression 95.08%, Gradient Boosting 93.44%.',
     ],
-    links: [{ label: 'Springer LNNS', href: 'https://www.springer.com/series/15179', kind: 'paper' }],
+    links: [{ label: 'Springer LNNS series', href: 'https://www.springer.com/series/15179', kind: 'paper' }],
     badge: 'Published · Springer',
   },
 ]
