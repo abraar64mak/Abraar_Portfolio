@@ -5,7 +5,7 @@ export const profile = {
   specialization: 'AI Systems & Healthcare Analytics',
   roles: ['Clinical RAG Engineer', 'Agentic Systems Builder', 'ECG Deep Learning Researcher', 'Healthcare AI Author'],
   summary:
-    'I build AI systems that clinicians can actually trust. From streaming ECG inference on wearables to physician-graded RAG over Medicaid charts, my work sits where artificial intelligence meets medical research: secure by design, measured honestly, and shipped to production.',
+    'Machine learning engineer bridging artificial intelligence and medical healthcare research. From streaming ECG inference on wearables to physician-graded RAG over Medicaid charts, I build AI that clinicians can trust: secure by design, measured honestly, shipped to production.',
   // Privacy: no phone number is stored or displayed anywhere in this project.
   email: 'abraar.farooqali@gmail.com',
   linkedin: 'https://www.linkedin.com/in/abraar-khan-ali',

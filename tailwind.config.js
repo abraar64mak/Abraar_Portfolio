@@ -11,6 +11,8 @@ export default {
         ink: { 950: '#050912', 900: '#080e1b', 800: '#0c1424', 700: '#131d33' },
         cyan: { glow: '#22d3ee' },
         teal: { glow: '#2dd4bf' },
+        heart: '#fb7185',
+        ai: '#a78bfa',
       },
       keyframes: {
         ring: {

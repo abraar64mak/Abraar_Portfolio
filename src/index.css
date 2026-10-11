@@ -50,3 +50,27 @@ body {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ---- dashboard panels ---- */
+.panel {
+  position: relative;
+  border: 1px solid rgba(34, 211, 238, 0.13);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(14, 24, 42, 0.9), rgba(8, 14, 27, 0.9));
+  box-shadow: 0 10px 40px -18px rgba(0, 0, 0, 0.8);
+}
+.panel::before, .panel::after {
+  content: ''; position: absolute; width: 14px; height: 14px; opacity: 0.8; pointer-events: none;
+}
+.panel::before { top: -1px; left: -1px; border-top: 2px solid #22d3ee; border-left: 2px solid #22d3ee; border-top-left-radius: 14px; }
+.panel::after { bottom: -1px; right: -1px; border-bottom: 2px solid #22d3ee; border-right: 2px solid #22d3ee; border-bottom-right-radius: 14px; }
+.panel-hover { transition: border-color .25s, box-shadow .25s, transform .25s; }
+.panel-hover:hover { border-color: rgba(34, 211, 238, 0.45); box-shadow: 0 0 40px -10px rgba(34, 211, 238, 0.35); }
+.ecg-paper {
+  background-image:
+    linear-gradient(rgba(251, 113, 133, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 113, 133, 0.07) 1px, transparent 1px),
+    linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+}
