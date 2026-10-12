@@ -2,6 +2,7 @@ import { Pause, Play } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Counter from './Counter'
 import EcgLine from './EcgLine'
+import HeroHalo from './HeroHalo'
 import LivingPortrait from './LivingPortrait'
 import { profile } from '../data/profile'
 import { scrollToTarget } from '../lib/scroll'
@@ -19,6 +20,7 @@ export default function Hero() {
   const video = useRef<HTMLVideoElement>(null)
   const [missing, setMissing] = useState(false)       // no hero video
   const [noPortrait, setNoPortrait] = useState(false) // no cut-out photo either
+  const [vid, setVid] = useState<{ loaded: boolean; alpha: boolean }>({ loaded: false, alpha: true })
   const [sound, setSound] = useState(false)
   const [blocked, setBlocked] = useState(false)
   const userChoice = useRef<boolean | null>(null) // null = user hasn't touched the button
@@ -76,10 +78,19 @@ export default function Hero() {
       <div className="pointer-events-none relative mx-auto flex h-[58svh] w-full items-end justify-center lg:absolute lg:inset-x-0 lg:bottom-0 lg:top-12 lg:h-auto">
         <div className="relative h-full lg:h-[min(96svh,1040px)] lg:max-h-full" style={{ aspectRatio: '768 / 960' }}>
           {!missing ? (
-            <video ref={video} loop muted playsInline preload="auto" aria-label="Abraar introducing himself" className="h-full w-full object-contain mix-blend-multiply" style={{ maskImage: 'linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)', WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)' }}>
-              <source src={`${base}hero/hero.webm`} type="video/webm" />
-              <source src={`${base}hero/hero.mp4`} type="video/mp4" onError={() => setMissing(true)} />
-            </video>
+            <>
+              <HeroHalo />
+              {/* hero.webm has a transparent background; the Safari fallback hero.mp4 sits on white and is blended in */}
+              <video
+                ref={video} loop muted playsInline preload="auto" aria-label="Abraar introducing himself"
+                onLoadedData={(e) => setVid({ loaded: true, alpha: e.currentTarget.currentSrc.endsWith('.webm') })}
+                className={`relative h-full w-full object-contain transition-opacity duration-700 ${vid.loaded ? 'opacity-100' : 'opacity-0'} ${vid.alpha ? '' : 'mix-blend-multiply'}`}
+                style={vid.alpha ? undefined : { maskImage: 'linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)', WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)' }}
+              >
+                <source src={`${base}hero/hero.webm`} type="video/webm" />
+                <source src={`${base}hero/hero.mp4`} type="video/mp4" onError={() => setMissing(true)} />
+              </video>
+            </>
           ) : noPortrait ? (
             <Placeholder />
           ) : (

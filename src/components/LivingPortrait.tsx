@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { HERO_PORTRAIT as H } from '../data/hero'
+import HeroHalo from './HeroHalo'
 
 const base = import.meta.env.BASE_URL
 const SRC = `${base}hero/me.webp`
@@ -49,11 +50,7 @@ export default function LivingPortrait({ onMissing }: { onMissing: () => void })
   const bodyMask = `linear-gradient(to bottom, transparent ${sp - 0.3}%, #000 ${sp + 0.3}%)`
   return (
     <div ref={stage} className="relative flex h-full w-full items-end justify-center" role="img" aria-label="3D avatar of Abraar Khan">
-      {/* halo that slowly pulses like a heartbeat */}
-      <span aria-hidden className="absolute bottom-[26%] left-1/2 aspect-square h-[46%] -translate-x-1/2 animate-ring rounded-full border border-ink/10" />
-      <span aria-hidden className="absolute bottom-[26%] left-1/2 aspect-square h-[46%] -translate-x-1/2 animate-ring rounded-full border border-ink/10" style={{ animationDelay: '1.2s' }} />
-      {/* ground shadow */}
-      <span aria-hidden className="absolute bottom-[1.5%] left-1/2 h-[3.5%] w-[62%] -translate-x-1/2 rounded-[50%] bg-ink/25 blur-xl" />
+      <HeroHalo />
 
       <div ref={body} className="relative h-full will-change-transform" style={{ aspectRatio: String(ratio), transformOrigin: '50% 100%' }}>
         <div className={`absolute inset-0 origin-bottom transition-all duration-[1400ms] ${ready ? 'translate-y-0 opacity-100 blur-0' : 'translate-y-8 opacity-0 blur-md'}`} style={{ transitionTimingFunction: 'var(--ease)' }}>
