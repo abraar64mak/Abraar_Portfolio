@@ -1,4 +1,13 @@
-# Make the talking-avatar hero (3 steps)
+# Make the avatar hero
+
+## Quick route (no video, no voice): animated 3D avatar
+
+1. Do **Step 1** below. Upload the white-background standing character image (the one in the guide) as the **first** image and `docs/avatar-source.jpg` as the second, with the *with-reference* prompt.
+2. Save the result, then cut it out: `.venv/bin/python scripts/cutout-portrait.py ~/Downloads/my-avatar.png` (instructions at the top of that script). This writes `public/hero/me.webp`.
+3. Tell Claude (or edit `src/data/hero.ts`) where the neck is so the head can turn and nod toward the cursor.
+
+## Full route: talking video (3 steps)
+
 
 The site works without a video (it shows a soft silhouette). Do these steps to bring the hero to life.
 
