@@ -1,25 +1,29 @@
 #!/usr/bin/env python3
 """
-Turn the Google Flow intro clip into a seamless looping hero video with a TRANSPARENT background.
+Turn the Google Flow intro clip into a seamless looping hero video that sits directly on the page (no backdrop).
 
     python3 -m venv .venv && .venv/bin/pip install rembg onnxruntime pillow numpy      # once (about 1 GB incl. model)
     .venv/bin/python scripts/build-hero-assets.py path/to/intro.mp4
     .venv/bin/python scripts/build-hero-assets.py intro.mp4 --crop 552:690:371:25      # w:h:x:y, skip auto-detect
     .venv/bin/python scripts/build-hero-assets.py intro.mp4 --photo me.jpg             # ID-card portrait from a photo
+    .venv/bin/python scripts/build-hero-assets.py intro.mp4 --voice                    # keep the audio track
 
 Outputs (into ./public):
-    hero/hero.webm   VP9 with alpha channel   (Chrome, Edge, Firefox, Android)
-    hero/hero.mp4    H.264 on white           (Safari/iOS fallback; the page blends it into the background)
-Both are silent by default (pass --voice to keep the audio track). The page shows chat-style messages beside him instead.
+    hero/hero.webm   packed video: colour (left half) + matte (right half)   (Chrome, Edge, Firefox, Android)
+    hero/hero.mp4    the same, H.264                                         (Safari / iOS)
     portrait-bust.webp   480x600 ID-card portrait    (only if you pass --photo, or none exists yet)
     og.jpg               1200x630 social preview
 
+Why "packed"? Browsers disagree about transparent video, so the transparency is stored as an ordinary
+picture: the left half is the person (premultiplied over black), the right half is the cut-out matte.
+The page (src/components/AlphaVideo.tsx) recombines them on a canvas, so it looks identical everywhere.
+
 What it does
   1. Finds the person, crops head to toe, scales to 768x960.
-  2. Trims the silent tail after you stop talking so the loop doesn't dead-air.
-  3. Cuts the person out of EVERY frame (rembg), smooths the matte over time, removes the backdrop fringe.
-  4. Cross-fades the last 0.5 s into the first 0.5 s (picture and sound, sample-accurate) so the loop has no jump or click.
-     Nothing is retimed, so lips stay in sync.
+  2. Cuts the person out of EVERY frame (rembg), smooths the matte over time, removes the backdrop fringe.
+  3. Finds the best loop join: it searches for the start and end frames that look most alike (the start is
+     before you speak, the end is after), then cross-fades a few frames. No jump, no ghosting.
+  4. Optionally keeps the voice (--voice), cross-faded sample-accurately. The default is silent.
 Needs: ffmpeg + ffprobe on PATH, and the Python packages above.
 """
 import argparse, json, shutil, subprocess, sys, tempfile
@@ -29,9 +33,9 @@ from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 PUB = ROOT / "public"
-XF_SEC = 0.5        # cross-fade length
+XF_FRAMES = 6       # frames cross-faded at the loop join
 MAX_LEN = 15.0      # never use more than this much of the source
-TAIL = 0.7          # keep this long after the last spoken word (must be >= XF_SEC)
+TAIL = 0.7          # candidate loop ends are searched from the last spoken word to this long after it
 OUT_W, OUT_H = 768, 960
 SR = 48000
 
@@ -109,16 +113,16 @@ def main():
     w, h, dur, fps, has_audio = probe(src)
     audio = read_audio(src) if has_audio else None
     T = min(MAX_LEN, dur)
+    s0 = s1 = 0.0
     if audio is not None:
         s0, s1 = speech_window(audio)
-        T = min(T, max(s1 + TAIL, 3.0))
+        T = min(T, max(s1 + TAIL + 0.3, 3.0))
         print(f"speech {s0:.2f}s to {s1:.2f}s -> using the first {T:.2f}s of {dur:.1f}s")
-        if s0 < XF_SEC:
-            print("  note: speech starts inside the cross-fade; leave about half a second of silence at the start for a cleaner loop")
+        if s0 < 0.35:
+            print("  note: speech starts almost immediately; leave about half a second of stillness at the start for a cleaner loop")
     n = int(round(T * fps))
-    xf = max(2, int(round(XF_SEC * fps)))
     cw, ch, cx, cy = map(int, a.crop.split(":")) if a.crop else auto_crop(src, w, h, dur)
-    print(f"source {w}x{h} @ {fps:g} fps | crop {cw}x{ch} at {cx},{cy} | {n} frames, {xf}-frame cross-fade")
+    print(f"source {w}x{h} @ {fps:g} fps | crop {cw}x{ch} at {cx},{cy} | {n} frames")
 
     (PUB / "hero").mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as td:
@@ -138,50 +142,61 @@ def main():
             rgb.append(np.asarray(im, np.uint8))
             if i % 20 == 0:
                 print(f"  matting {i + 1}/{n}", flush=True)
-        # smooth the matte over time (kills edge flicker), then clean the edge
         sm = [refine((0.25 * alpha[max(i - 1, 0)] + 0.5 * alpha[i] + 0.25 * alpha[min(i + 1, n - 1)])) for i in range(n)]
         frames = [np.dstack([rgb[i], (sm[i] * 255).astype(np.uint8)]) for i in range(n)]
 
-        # 3. seamless loop on RGBA (premultiplied blend)
-        out = frames[xf : n - xf]
-        for i in range(xf):
-            wt = (i + 1) / (xf + 1)
-            f1, f2 = frames[n - xf + i].astype(np.float32), frames[i].astype(np.float32)
+        # 3. best loop join: start before the speech, end after it, most similar pair wins
+        K = XF_FRAMES
+        j_max = max(0, int(round((s0 if audio is not None else 0.6) * fps)) - K - 2)
+        i_min = int(round(((s1 if audio is not None else T * 0.8)) * fps))
+        i_min = min(max(i_min, K * 3 + j_max + 2), n - 1)
+        small = [np.asarray(Image.fromarray(fr, "RGBA").convert("RGBa").resize((96, 120), Image.BILINEAR).convert("RGBA"), np.float32) for fr in frames]
+        best = min(((float(np.abs(small[ii] - small[jj]).mean()), jj, ii) for jj in range(0, j_max + 1) for ii in range(i_min, n)), key=lambda x: x[0])
+        _, j0, i0 = best
+        print(f"  loop join: frames {j0}..{i0} ({(i0 - j0 + 1) / fps:.2f}s), seam difference {best[0]:.2f}")
+        S = frames[j0 : i0 + 1]
+        L = len(S)
+        out = S[K : L - K]
+        for t in range(K):
+            wt = (t + 1) / (K + 1)
+            f1, f2 = S[L - K + t].astype(np.float32), S[t].astype(np.float32)
             a1, a2 = f1[:, :, 3:] / 255, f2[:, :, 3:] / 255
             pa = (1 - wt) * a1 + wt * a2
             pc = ((1 - wt) * f1[:, :, :3] * a1 + wt * f2[:, :, :3] * a2) / np.maximum(pa, 1e-4)
             out.append(np.dstack([pc, pa * 255]).clip(0, 255).astype(np.uint8))
-        od = td / "o"; od.mkdir()
-        for i, fr in enumerate(out):
-            Image.fromarray(fr, "RGBA").save(od / f"o_{i:04d}.png", compress_level=1)
 
-        # 4. sound: same cross-fade, sample-accurate
+        # 4. pack: left = colour premultiplied over black, right = matte (grey)
+        od = td / "o"; od.mkdir()
+        for k, fr in enumerate(out):
+            al = fr[:, :, 3:4].astype(np.float32) / 255
+            col = (fr[:, :, :3].astype(np.float32) * al).astype(np.uint8)
+            mat = np.repeat(fr[:, :, 3:4], 3, axis=2)
+            Image.fromarray(np.hstack([col, mat]), "RGB").save(od / f"o_{k:04d}.png", compress_level=1)
+
+        # 5. optional voice, cross-faded to match
         sound = None
         if audio is not None and a.voice:
-            s = audio[: int(round(n / fps * SR))]
-            k = int(round(xf / fps * SR))
-            wgt = np.linspace(0, 1, k, dtype=np.float32)
-            loop = np.concatenate([s[k : len(s) - k], s[len(s) - k :] * (1 - wgt) + s[:k] * wgt]).astype(np.float32)
+            seg = audio[int(round(j0 / fps * SR)) : int(round((i0 + 1) / fps * SR))]
+            kk = int(round(K / fps * SR))
+            wgt = np.linspace(0, 1, kk, dtype=np.float32)
+            loop = np.concatenate([seg[kk : len(seg) - kk], seg[len(seg) - kk :] * (1 - wgt) + seg[:kk] * wgt]).astype(np.float32)
             sound = td / "loop.f32"
             loop.tofile(sound)
 
-        def encode(dest, vargs, aargs, vf=None):
+        def encode(dest, vargs, aargs):
             cmd = ["ffmpeg", "-y", "-v", "error", "-framerate", f"{fps:g}", "-i", od / "o_%04d.png"]
             if sound:
                 cmd += ["-f", "f32le", "-ar", SR, "-ac", "1", "-i", sound]
-            if vf:
-                cmd += ["-filter_complex", vf, "-map", "[v]"]
-            else:
-                cmd += ["-map", "0:v"]
-            cmd += (["-map", "1:a"] if sound else []) + vargs + (aargs if sound else []) + ["-shortest", dest]
+            cmd += ["-map", "0:v"] + (["-map", "1:a"] if sound else [])
+            cmd += ["-vf", "scale=out_color_matrix=bt709:out_range=tv,format=yuv420p", "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-color_range", "tv"]
+            cmd += vargs + (aargs if sound else []) + ["-shortest", dest]
             run(cmd)
 
-        encode(PUB / "hero/hero.webm", ["-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p", "-b:v", "0", "-crf", "33", "-auto-alt-ref", "0", "-row-mt", "1"], ["-c:a", "libopus", "-b:a", "80k"])
-        encode(PUB / "hero/hero.mp4", ["-c:v", "libx264", "-crf", "24", "-preset", "slow", "-movflags", "+faststart"], ["-c:a", "aac", "-b:a", "96k"],
-               vf=f"color=c=white:s={OUT_W}x{OUT_H}:r={fps:g}[bg];[bg][0:v]overlay=shortest=1,format=yuv420p[v]")
+        encode(PUB / "hero/hero.webm", ["-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "28", "-row-mt", "1"], ["-c:a", "libopus", "-b:a", "80k"])
+        encode(PUB / "hero/hero.mp4", ["-c:v", "libx264", "-crf", "20", "-preset", "slow", "-movflags", "+faststart"], ["-c:a", "aac", "-b:a", "96k"])
 
-        # 5. stills
-        mid = Image.fromarray(frames[n // 2], "RGBA")
+        # 6. stills
+        mid = Image.fromarray(S[L // 2], "RGBA")
         if a.photo:
             run(["ffmpeg", "-y", "-v", "error", "-i", a.photo, "-vf", "scale=480:600:force_original_aspect_ratio=increase,crop=480:600", "-frames:v", "1", PUB / "portrait-bust.webp"])
         elif not (PUB / "portrait-bust.webp").exists():
