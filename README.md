@@ -51,4 +51,4 @@ The résumé PDF served by the "Résumé ↓" buttons is `public/Abraar_Khan_CV.
 - **Honesty:** the Live lab demos run on synthetic data with simple rules and say so on screen. They illustrate the systems and are not runs of the real models. The project visuals in the Work gallery are labelled "Illustrative UI"; the paper charts are transcribed from the papers.
 - **Logos:** brand marks come from [simple-icons](https://simpleicons.org) (CC0) in their official colours. Marks for concepts (RAG, MCP, AWS, Azure…) are Lucide line icons.
 - **Colour:** white, black and grays. The Live lab is a single dark, rounded "instrument" card, and its status colours are the one deliberate exception.
-- **Replace before sending:** the Springer and AIP links point to the publisher series pages. Swap in your paper DOIs in `src/data/projects.ts`.
+- **Paper links:** the Work gallery buttons for the two papers open the AIP and Springer pages (set in `src/data/projects.ts`).

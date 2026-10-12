@@ -1,7 +1,7 @@
 export const profile = {
   name: 'Abraar Khan',
   handle: 'abraar64mak',
-  location: 'Nevada, USA · open to relocating',
+  location: 'United States',
   specialization: 'AI Systems & Healthcare Analytics',
   roles: ['Clinical RAG Engineer', 'Agentic Systems Builder', 'ECG Deep Learning Researcher', 'Healthcare AI Author'],
   summary:

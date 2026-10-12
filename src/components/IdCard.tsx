@@ -80,7 +80,7 @@ export default function IdCard() {
                 <p className="mt-1.5 text-[12px] text-mute">ML &amp; AI Systems Engineer</p>
               </div>
               <dl className="mx-6 mt-4 space-y-1.5 font-mono text-[10px]">
-                {[['FIELD', 'Healthcare AI'], ['DEGREE', 'M.S. AI Systems'], ['BASE', 'Nevada, USA']].map(([k, v]) => (
+                {[['FIELD', 'Healthcare AI'], ['DEGREE', 'M.S. AI Systems'], ['BASE', 'United States']].map(([k, v]) => (
                   <div key={k} className="flex justify-between border-b border-dashed border-ink/15 pb-1"><dt className="text-faint">{k}</dt><dd>{v}</dd></div>
                 ))}
               </dl>

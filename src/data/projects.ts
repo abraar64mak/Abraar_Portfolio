@@ -54,7 +54,7 @@ export const projects: Project[] = [
       'Accepted in AIP Conference Proceedings, Scopus indexed; won the Best Paper Award.',
       'Systematic layer-depth comparison: accuracy, precision, recall and loss reported side by side.',
     ],
-    links: [{ label: 'AIP Conference Proceedings', href: 'https://pubs.aip.org/aip/acp', kind: 'paper' }],
+    links: [{ label: 'Read the paper (AIP)', href: 'https://pubs.aip.org/aip/acp/article-abstract/3175/1/020058/3339024/AI-in-healthcare-Predicting-the-fetus-health-using?redirectedFrom=PDF', kind: 'paper' }],
     badge: 'Best Paper',
   },
   {
@@ -134,7 +134,7 @@ export const projects: Project[] = [
       'Indexed in Scopus, INSPEC, WTI Frankfurt eG, zbMATH and SCImago.',
       'Ridge and Random Forest tied at 96.72% accuracy; Logistic Regression 95.08%, Gradient Boosting 93.44%.',
     ],
-    links: [{ label: 'Springer LNNS series', href: 'https://www.springer.com/series/15179', kind: 'paper' }],
+    links: [{ label: 'Read the paper (Springer)', href: 'https://link.springer.com/chapter/10.1007/978-981-97-0892-5_50', kind: 'paper' }],
     badge: 'Published · Springer',
   },
 ]
