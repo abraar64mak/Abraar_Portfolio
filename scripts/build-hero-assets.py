@@ -236,10 +236,11 @@ def main():
         elif not (PUB / "portrait-bust.webp").exists():
             bg = Image.new("RGBA", mid.size, (232, 230, 224, 255)); bg.alpha_composite(mid)
             bg.convert("RGB").crop((144, 0, 624, 600)).save(PUB / "portrait-bust.webp", quality=85)
-        og = Image.new("RGB", (1200, 630), (244, 242, 238))
-        p = mid.resize((int(OUT_W * 630 / OUT_H), 630), Image.LANCZOS)
-        og.paste(p, ((1200 - p.width) // 2, 0), p)
-        og.save(PUB / "og.jpg", quality=88)
+        if not (PUB / "og.jpg").exists():   # the designed share image (name + role + you) is kept if present
+            og = Image.new("RGB", (1200, 630), (244, 242, 238))
+            p = mid.resize((int(OUT_W * 630 / OUT_H), 630), Image.LANCZOS)
+            og.paste(p, ((1200 - p.width) // 2, 0), p)
+            og.save(PUB / "og.jpg", quality=88)
 
     for f in ["hero/hero.webm", "hero/hero.mp4", "portrait-bust.webp", "og.jpg"]:
         print(f"  wrote public/{f}  ({(PUB / f).stat().st_size / 1024:.0f} KB)")
