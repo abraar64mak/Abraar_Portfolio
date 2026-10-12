@@ -33,7 +33,7 @@ from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 PUB = ROOT / "public"
-XF_FRAMES = 6       # frames cross-faded at the loop join
+XF_FRAMES = 12      # frames cross-faded at the loop join (the two ends are also slid into alignment)
 MAX_LEN = 15.0      # never use more than this much of the source
 TAIL = 0.7          # candidate loop ends are searched from the last spoken word to this long after it
 OUT_W, OUT_H = 768, 960
@@ -97,11 +97,35 @@ def refine(a):
     return np.asarray(im, np.float32) / 255
 
 
+def row_centroid(fr):
+    """Per-row centre of the matte (x) and its weight."""
+    a = fr[:, :, 3].astype(np.float64) / 255
+    wgt = a.sum(1)
+    return (a * np.arange(a.shape[1])).sum(1) / np.maximum(wgt, 1e-6), wgt
+
+
+def fit_lean(end_fr, start_fr):
+    """How far each row must slide sideways to move the END pose onto the START pose: d(y) = k*y + c."""
+    c1, w1 = row_centroid(end_fr)
+    c2, w2 = row_centroid(start_fr)
+    rows = np.where((w1 > 40) & (w2 > 40))[0]
+    k, c = np.polyfit(rows, c2[rows] - c1[rows], 1)
+    return k, c
+
+
+def slide(fr, k, c, amt):
+    """Shift every row sideways by amt * (k*y + c), with sub-pixel smoothing (premultiplied, so no fringes)."""
+    im = Image.fromarray(fr, "RGBA").convert("RGBa")
+    im = im.transform(im.size, Image.AFFINE, (1, -amt * k, -amt * c, 0, 1, 0), resample=Image.BILINEAR)
+    return np.asarray(im.convert("RGBA"))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("video")
     ap.add_argument("--crop", help="w:h:x:y crop box in source pixels")
     ap.add_argument("--photo", help="photo for the ID-card portrait")
+    ap.add_argument("--cache", help="file to save/load the matted frames (speeds up repeated runs)")
     ap.add_argument("--voice", action="store_true", help="keep the voice (default: the hero is silent, with chat-style messages on the page)")
     a = ap.parse_args()
     try:
@@ -132,18 +156,25 @@ def main():
         files = sorted(td.glob("f_*.png"))[:n]
         n = len(files)
 
-        # 2. matte every frame
-        sess = new_session("isnet-general-use")
-        rgb, alpha = [], []
-        for i, f in enumerate(files):
-            im = Image.open(f).convert("RGB")
-            m = remove(im, session=sess)
-            alpha.append(np.asarray(m, np.uint8)[:, :, 3].astype(np.float32) / 255)
-            rgb.append(np.asarray(im, np.uint8))
-            if i % 20 == 0:
-                print(f"  matting {i + 1}/{n}", flush=True)
-        sm = [refine((0.25 * alpha[max(i - 1, 0)] + 0.5 * alpha[i] + 0.25 * alpha[min(i + 1, n - 1)])) for i in range(n)]
-        frames = [np.dstack([rgb[i], (sm[i] * 255).astype(np.uint8)]) for i in range(n)]
+        # 2. matte every frame (cached if --cache is given)
+        if a.cache and Path(a.cache).exists():
+            frames = list(np.load(a.cache))
+            n = len(frames)
+            print(f"  loaded {n} matted frames from {a.cache}")
+        else:
+            sess = new_session("isnet-general-use")
+            rgb, alpha = [], []
+            for i, f in enumerate(files):
+                im = Image.open(f).convert("RGB")
+                m = remove(im, session=sess)
+                alpha.append(np.asarray(m, np.uint8)[:, :, 3].astype(np.float32) / 255)
+                rgb.append(np.asarray(im, np.uint8))
+                if i % 20 == 0:
+                    print(f"  matting {i + 1}/{n}", flush=True)
+            sm = [refine((0.25 * alpha[max(i - 1, 0)] + 0.5 * alpha[i] + 0.25 * alpha[min(i + 1, n - 1)])) for i in range(n)]
+            frames = [np.dstack([rgb[i], (sm[i] * 255).astype(np.uint8)]) for i in range(n)]
+            if a.cache:
+                np.save(a.cache, np.stack(frames))
 
         # 3. best loop join: start before the speech, end after it, most similar pair wins
         K = XF_FRAMES
@@ -157,12 +188,15 @@ def main():
         S = frames[j0 : i0 + 1]
         L = len(S)
         out = S[K : L - K]
+        k_, c_ = fit_lean(S[L - 1], S[K - 1])
+        print(f"  alignment at the join: shift {c_:+.1f}px at the top of the frame, lean {k_ * 100:+.2f}px per 100 rows")
         for t in range(K):
-            wt = (t + 1) / (K + 1)
-            f1, f2 = S[L - K + t].astype(np.float32), S[t].astype(np.float32)
+            g = (t + 1) / (K + 1)
+            f1 = slide(S[L - K + t], k_, c_, g).astype(np.float32)        # end of the clip, sliding toward the start pose
+            f2 = slide(S[t], k_, c_, -(1 - g)).astype(np.float32)         # start of the clip, sliding toward the end pose
             a1, a2 = f1[:, :, 3:] / 255, f2[:, :, 3:] / 255
-            pa = (1 - wt) * a1 + wt * a2
-            pc = ((1 - wt) * f1[:, :, :3] * a1 + wt * f2[:, :, :3] * a2) / np.maximum(pa, 1e-4)
+            pa = (1 - g) * a1 + g * a2
+            pc = ((1 - g) * f1[:, :, :3] * a1 + g * f2[:, :, :3] * a2) / np.maximum(pa, 1e-4)
             out.append(np.dstack([pc, pa * 255]).clip(0, 255).astype(np.uint8))
 
         # 4. pack: left = colour premultiplied over black, right = matte (grey)
