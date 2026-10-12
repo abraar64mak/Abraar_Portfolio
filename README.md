@@ -14,7 +14,11 @@ npm run build      # type-check + production build -> dist/
 npm run preview
 ```
 
-## Hero photo
+## Hero video (current) and photo (fallback)
+
+The hero plays `public/hero/hero.webm` (transparent background, with sound; Safari uses `hero.mp4`). Rebuild it from any new clip with `scripts/build-hero-assets.py` (setup at the top of that file). If the video files are missing, the page falls back to the animated photo below.
+
+### Animated photo
 
 The hero shows a cut-out of Abraar (`public/hero/me.webp`) that breathes and tilts toward the cursor. To use a different photo, run `scripts/cutout-portrait.py` (instructions are at the top of that file).
 

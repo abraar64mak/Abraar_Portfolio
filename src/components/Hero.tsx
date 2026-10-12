@@ -99,7 +99,7 @@ export default function Hero() {
         </div>
         {/* sound control: icon-only, ▶ when off, ❚❚ when on */}
         {!missing && (
-          <button onClick={toggle} aria-label={sound ? 'Turn sound off' : 'Turn sound on'} aria-pressed={sound} className="pointer-events-auto absolute bottom-3 left-1/2 z-20 flex h-[46px] w-[46px] -translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-lg transition-transform hover:scale-105 lg:bottom-8">
+          <button onClick={toggle} aria-label={sound ? 'Turn sound off' : 'Turn sound on'} aria-pressed={sound} className="pointer-events-auto absolute bottom-6 left-1/2 z-20 ml-[clamp(64px,9vw,130px)] flex h-[46px] w-[46px] -translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-lg transition-transform hover:scale-105 lg:bottom-10">
             {blocked && !sound && <span aria-hidden className="absolute inset-0 animate-ring rounded-full border border-ink" />}
             {sound ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-0.5" />}
           </button>
