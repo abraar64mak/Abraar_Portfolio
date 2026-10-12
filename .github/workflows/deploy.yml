@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, claude/healthcare-portfolio-interactive-0j5671]
   workflow_dispatch:
 
 permissions:
