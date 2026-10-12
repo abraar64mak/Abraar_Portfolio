@@ -77,7 +77,7 @@ npm run build        # type-check and production build into dist/
 npm run preview      # serve the production build locally
 ```
 
-`dist/` is a plain static site, so it deploys anywhere (Vercel, Netlify, GitHub Pages).
+`dist/` is a plain static site, so it deploys anywhere. This repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that builds it and publishes it to **GitHub Pages** on every push to `main`.
 
 ## Project structure
 
