@@ -29,7 +29,7 @@ Five projects in an expanding gallery. Hover a panel to open it. The two publish
 
 | Project | What it is |
 | --- | --- |
-| **BeatNet** | Real-time single-lead ECG fiducial detection and cardiac classification (1D U-Net and transformer pipeline) |
+| **BeatNet** | Real-time single-lead ECG fiducial detection and cardiac classification (1D U-Net and transformer pipeline) · [GitHub](https://github.com/abraar64mak/Beatnet) |
 | **Fetal Health Prediction** | CNN study across layer depths. **Best Paper**, IConIC 2K23 · [AIP Conference Proceedings](https://pubs.aip.org/aip/acp/article-abstract/3175/1/020058/3339024/AI-in-healthcare-Predicting-the-fetus-health-using?redirectedFrom=PDF) |
 | **Multi-Agent Data Assistant** | LangGraph and MCP NL-to-SQL agents behind a sqlglot AST firewall: 100% adversarial refusal across 65 attack tests · [GitHub](https://github.com/abraar64mak/mcp-data-assistant) |
 | **Transformer Document Intelligence** | Fine-tuned RoBERTa NER at scale on PySpark: 0.916 strict entity F1 on 3,453 CoNLL-2003 test samples · [GitHub](https://github.com/abraar64mak/document-intelligence-platform) |

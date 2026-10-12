@@ -27,7 +27,7 @@ export const projects: Project[] = [
       'Built for real-time, single-lead settings rather than clean 12-lead hospital recordings.',
       'Related production work: streaming ECG inference and rare-class waveform synthesis at Aventusoft (F1 +14%, AUC +11%).',
     ],
-    links: [{ label: 'GitHub profile', href: GH, kind: 'github' }],
+    links: [{ label: 'GitHub repository', href: `${GH}/Beatnet`, kind: 'github' }],
     badge: 'Flagship',
   },
   {
