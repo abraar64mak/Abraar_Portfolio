@@ -14,9 +14,13 @@ npm run build      # type-check + production build -> dist/
 npm run preview
 ```
 
-## Add your avatar video
+## Hero photo
 
-The hero shows a soft silhouette until you add your video. Follow **[docs/AVATAR_GUIDE.md](docs/AVATAR_GUIDE.md)**: three steps with ready-to-paste prompts (male voice, your intro line) and one command that builds the seamless loop.
+The hero shows a cut-out of Abraar (`public/hero/me.webp`) that breathes and tilts toward the cursor. To use a different photo, run `scripts/cutout-portrait.py` (instructions are at the top of that file).
+
+## Add your avatar video (optional)
+
+If you add `public/hero/hero.mp4` it replaces the photo in the hero. Follow **[docs/AVATAR_GUIDE.md](docs/AVATAR_GUIDE.md)**: three steps with ready-to-paste prompts (male voice, your intro line) and one command that builds the seamless loop.
 
 ## Sections
 
