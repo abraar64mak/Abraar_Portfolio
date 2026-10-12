@@ -2,6 +2,7 @@ import { Pause, Play } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Counter from './Counter'
 import EcgLine from './EcgLine'
+import LivingPortrait from './LivingPortrait'
 import { profile } from '../data/profile'
 import { scrollToTarget } from '../lib/scroll'
 
@@ -16,7 +17,8 @@ const STATS = [
 export default function Hero() {
   const root = useRef<HTMLElement>(null)
   const video = useRef<HTMLVideoElement>(null)
-  const [missing, setMissing] = useState(false)
+  const [missing, setMissing] = useState(false)       // no hero video
+  const [noPortrait, setNoPortrait] = useState(false) // no cut-out photo either
   const [sound, setSound] = useState(false)
   const [blocked, setBlocked] = useState(false)
   const userChoice = useRef<boolean | null>(null) // null = user hasn't touched the button
@@ -67,7 +69,7 @@ export default function Hero() {
   return (
     <section id="top" ref={root} className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-[72px] sm:pb-14">
       {/* ghost first name */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[9%] select-none text-center font-sans text-[clamp(5rem,24vw,22rem)] font-extrabold uppercase leading-none tracking-tighter" style={{ WebkitTextStroke: '1.5px rgba(13,13,13,.14)', color: 'transparent' }}>Abraar</div>
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[9%] select-none text-center font-sans text-[clamp(5rem,24vw,22rem)] font-extrabold uppercase leading-none tracking-tighter" style={{ WebkitTextStroke: '1.5px rgba(13,13,13,.14)', color: 'transparent', transform: 'translate3d(var(--gx,0px), var(--gy,0px), 0)' }}>Abraar</div>
       <EcgLine className="pointer-events-none absolute inset-x-0 bottom-[22%] hidden h-24 w-full opacity-30 lg:block" />
 
       {/* the talking video: stacked above the text on phones, centred behind it on desktop */}
@@ -78,8 +80,10 @@ export default function Hero() {
               <source src={`${base}hero/hero.webm`} type="video/webm" />
               <source src={`${base}hero/hero.mp4`} type="video/mp4" onError={() => setMissing(true)} />
             </video>
-          ) : (
+          ) : noPortrait ? (
             <Placeholder />
+          ) : (
+            <LivingPortrait onMissing={() => setNoPortrait(true)} />
           )}
         </div>
         {/* sound control: icon-only, ▶ when off, ❚❚ when on */}

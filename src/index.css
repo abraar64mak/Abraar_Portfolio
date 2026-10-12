@@ -112,3 +112,5 @@ body { @apply bg-paper font-sans text-ink antialiased; overflow-x: hidden; }
 }
 
 @keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+@keyframes breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.006, 1.012); } }
