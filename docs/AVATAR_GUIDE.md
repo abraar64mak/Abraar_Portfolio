@@ -1,5 +1,23 @@
 # Make the avatar hero
 
+## Current hero: silent avatar + chat-style messages
+
+The hero plays the avatar **without sound**. Short messages pop in beside him like a chat thread, timed to the lip movement, ending with an "Open to AI roles. Let's talk" button. Interviewers can skim it in a meeting or on a phone without anything playing out loud.
+
+- Edit the messages and their timing in `src/components/SpeechBubbles.tsx` (the `MSGS` list, times are seconds into the 7-second loop).
+- To rebuild the video from a new clip: `.venv/bin/python scripts/build-hero-assets.py intro.mp4` (silent by default; add `--voice` to keep the audio).
+
+**Optional Flow prompt for a silent clip** (append to the character and camera rules in Step 2 below, and replace the voice and script sections):
+
+```
+This is a SILENT video. There is NO audio at all: no voice, no music, no sound effects.
+The character appears to be speaking to the camera: natural, relaxed lip movement as if explaining something friendly, with a warm slight smile, occasional natural blinking, small head nods, and gentle expressive hand gestures (he may take one hand out of his pocket briefly, then return it).
+The movement must be subtle and natural. No exaggerated mouth movement, no sudden gestures.
+Start and end with about half a second of calm stillness so the clip loops smoothly.
+Keep the same character, outfit, pose, centered framing, plain pure white background, soft studio lighting and fixed camera as in the reference image.
+```
+
+
 ## Quick route (no video, no voice): animated 3D avatar
 
 1. Do **Step 1** below. Upload the white-background standing character image (the one in the guide) as the **first** image and `docs/avatar-source.jpg` as the second, with the *with-reference* prompt.

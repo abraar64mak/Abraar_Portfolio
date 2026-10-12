@@ -1,9 +1,9 @@
-import { Pause, Play } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Counter from './Counter'
 import EcgLine from './EcgLine'
 import HeroHalo from './HeroHalo'
 import LivingPortrait from './LivingPortrait'
+import SpeechBubbles from './SpeechBubbles'
 import { scrollToTarget } from '../lib/scroll'
 
 const base = import.meta.env.BASE_URL
@@ -19,53 +19,28 @@ export default function Hero() {
   const video = useRef<HTMLVideoElement>(null)
   const [missing, setMissing] = useState(false)       // no hero video
   const [noPortrait, setNoPortrait] = useState(false) // no cut-out photo either
-  const [vid, setVid] = useState<{ loaded: boolean; alpha: boolean }>({ loaded: false, alpha: true })
-  const [sound, setSound] = useState(false)
-  const [blocked, setBlocked] = useState(false)
-  const userChoice = useRef<boolean | null>(null) // null = user hasn't touched the button
-  const visible = useRef(true)
+  const [vid, setVid] = useState<{ loaded: boolean; alpha: boolean; len: number }>({ loaded: false, alpha: true, len: 7.2 })
 
-  const tryPlay = useCallback(async (withSound: boolean) => {
+  // the hero is silent: play muted, and pause whenever it is mostly out of view
+  useEffect(() => {
     const v = video.current
     if (!v) return
-    v.muted = !withSound
-    try { await v.play(); setSound(withSound); setBlocked(!withSound && userChoice.current === null) }
-    catch { v.muted = true; v.play().catch(() => {}); setSound(false); setBlocked(true) }
-  }, [])
+    v.muted = true
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.pause(); return }
+    v.play().catch(() => {})
+  }, [missing])
 
-  // autoplay: try with sound, fall back to muted
-  useEffect(() => { void tryPlay(true) }, [tryPlay])
-
-  // unlock sound on the first real gesture
-  useEffect(() => {
-    const unlock = () => {
-      if (userChoice.current === null && visible.current) void tryPlay(true)
-      ;['pointerdown', 'keydown', 'touchend'].forEach((t) => window.removeEventListener(t, unlock))
-    }
-    ;['pointerdown', 'keydown', 'touchend'].forEach((t) => window.addEventListener(t, unlock, { once: true }))
-    return () => ['pointerdown', 'keydown', 'touchend'].forEach((t) => window.removeEventListener(t, unlock))
-  }, [tryPlay])
-
-  // pause (and silence) the video when the hero is mostly out of view
   useEffect(() => {
     const el = root.current
     if (!el) return
     const io = new IntersectionObserver(([e]) => {
-      visible.current = e.intersectionRatio >= 0.35
       const v = video.current
-      if (!v) return
-      if (visible.current) v.play().catch(() => {}); else v.pause()
+      if (!v || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+      if (e.intersectionRatio >= 0.35) v.play().catch(() => {}); else v.pause()
     }, { threshold: [0, 0.35, 1] })
     io.observe(el)
     return () => io.disconnect()
   }, [])
-
-  const toggle = () => {
-    const v = video.current
-    if (!v) return
-    userChoice.current = !sound
-    if (sound) { v.muted = true; setSound(false) } else { setBlocked(false); void tryPlay(true) }
-  }
 
   return (
     <section id="top" ref={root} className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-[72px] sm:pb-14">
@@ -81,8 +56,8 @@ export default function Hero() {
               <HeroHalo />
               {/* hero.webm has a transparent background; the Safari fallback hero.mp4 sits on white and is blended in */}
               <video
-                ref={video} loop muted playsInline preload="auto" aria-label="Abraar introducing himself"
-                onLoadedData={(e) => setVid({ loaded: true, alpha: e.currentTarget.currentSrc.endsWith('.webm') })}
+                ref={video} loop muted playsInline preload="auto" aria-label="Abraar, animated"
+                onLoadedData={(e) => setVid({ loaded: true, alpha: e.currentTarget.currentSrc.endsWith('.webm'), len: e.currentTarget.duration || 7.2 })}
                 className={`relative h-full w-full object-contain transition-opacity duration-700 ${vid.loaded ? 'opacity-100' : 'opacity-0'} ${vid.alpha ? '' : 'mix-blend-multiply'}`}
                 style={vid.alpha ? undefined : { maskImage: 'linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)', WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)' }}
               >
@@ -95,24 +70,18 @@ export default function Hero() {
           ) : (
             <LivingPortrait onMissing={() => setNoPortrait(true)} />
           )}
+          <SpeechBubbles video={video} follow={!missing} loopSec={vid.len} />
         </div>
-        {/* sound control: icon-only, ▶ when off, ❚❚ when on */}
-        {!missing && (
-          <button onClick={toggle} aria-label={sound ? 'Turn sound off' : 'Turn sound on'} aria-pressed={sound} className="pointer-events-auto absolute bottom-6 left-1/2 z-20 ml-[clamp(64px,9vw,130px)] flex h-[46px] w-[46px] -translate-x-1/2 items-center justify-center rounded-full bg-ink text-white shadow-lg transition-transform hover:scale-105 lg:bottom-10">
-            {blocked && !sound && <span aria-hidden className="absolute inset-0 animate-ring rounded-full border border-ink" />}
-            {sound ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" className="ml-0.5" />}
-          </button>
-        )}
       </div>
 
       <div className="wrap relative z-10 mt-6 grid w-full gap-8 lg:mt-0 lg:grid-cols-[1fr_auto_1fr] lg:items-end">
         <div className="max-w-lg">
-          <p className="tag rv mb-4"><span className="mr-2 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-ink align-middle" />Available · Healthcare AI</p>
+          <p className="tag rv mb-4"><span className="mr-2 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-ink align-middle" />Available · AI roles</p>
           <h1 className="text-[clamp(2.6rem,6.4vw,5.4rem)] font-bold leading-[0.95] tracking-[-0.045em]">
             <span className="rv-mask"><span>ML &amp; AI Systems</span></span>
             <span className="rv-mask" style={{ ['--i' as string]: 1 }}><span><em className="serif-accent">Engineer.</em></span></span>
           </h1>
-          <p className="rv mt-5 max-w-md text-[15px] leading-relaxed text-ink2" style={{ ['--i' as string]: 3 }}>I build clinical-grade AI: from real-time ECG models to secure RAG and agentic systems that handle sensitive patient data.</p>
+          <p className="rv mt-5 max-w-md text-[15px] leading-relaxed text-ink2" style={{ ['--i' as string]: 3 }}>I build production AI, from real-time ECG models to secure RAG and agentic systems. Healthcare is my home turf; the craft applies anywhere AI ships.</p>
           <div className="rv mt-7 flex flex-wrap gap-3" style={{ ['--i' as string]: 4 }}>
             <a href="#work" onClick={(e) => { e.preventDefault(); scrollToTarget('work') }} className="pill pill-solid">Explore work</a>
             <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToTarget('contact') }} className="pill pill-line">Let’s talk</a>

@@ -1,14 +1,14 @@
 # Abraar Khan: Healthcare AI Portfolio
 
-**Machine learning engineer building clinical-grade AI**: real-time ECG models, secure RAG over patient data, and auditable agentic systems.
+**Machine learning engineer shipping production AI**: RAG, agentic and document-intelligence systems, and real-time models. Healthcare is my home turf; the craft applies anywhere AI ships.
 
 M.S. in Artificial Intelligence Systems, University of Florida · B.Tech in AI & Machine Learning, Anna University · Data Scientist at CDF · Based in the United States
 
 [LinkedIn](https://www.linkedin.com/in/abraar-khan-ali) · [GitHub](https://github.com/abraar64mak) · [Email](mailto:abraar.farooqali@gmail.com)
 
-![Hero: Abraar's talking-avatar introduction, with a live ECG line and headline results](docs/screenshots/01-hero.jpg)
+![Hero: animated avatar with chat-style messages, a live ECG line and headline results](docs/screenshots/01-hero.jpg)
 
-This repository is the source of my personal portfolio. It is built to be explored rather than scrolled past: a talking avatar introduces me, a lanyard ID card swings and flips, and the **Live lab** lets you try small, working versions of the systems I build.
+This repository is the source of my personal portfolio. It is built to be explored rather than scrolled past: an animated avatar introduces me with chat-style messages (no sound), a lanyard ID card swings and flips, and the **Live lab** lets you try small, working versions of the systems I build.
 
 ## What's on the site
 
@@ -87,8 +87,8 @@ src/
 ├── components/    page sections, ID card, hero player, lab demos (components/demos), charts
 ├── lib/           smooth-scroll and scroll hooks
 └── hooks/         reduced-motion helper
-public/hero/       hero video (hero.webm with transparency, hero.mp4 for Safari) and photo fallback
-scripts/           build-hero-assets.py (loops and cuts out the hero video), cutout-portrait.py
+public/hero/       silent hero video (hero.webm with transparency, hero.mp4 for Safari) and photo fallback
+scripts/           build-hero-assets.py (cuts out and loops the hero video), cutout-portrait.py
 docs/              screenshots and notes
 ```
 

@@ -43,7 +43,7 @@ export default function IdCard() {
     return () => { cancelAnimationFrame(raf); io.disconnect(); host.removeEventListener('pointermove', move) }
   }, [])
 
-  const strap = 'ABRAAR KHAN · ML ENGINEER · HEALTHCARE AI · '.repeat(3)
+  const strap = 'ABRAAR KHAN · ML & AI ENGINEER · '.repeat(3)
   return (
     <div ref={stage} className="relative mx-auto flex h-[560px] w-full justify-center overflow-visible">
       <div ref={swing} className="absolute left-1/2 top-0 -ml-[150px] w-[300px]" style={{ transformOrigin: '50% 0' }}>
@@ -80,7 +80,7 @@ export default function IdCard() {
                 <p className="mt-1.5 text-[12px] text-mute">ML &amp; AI Systems Engineer</p>
               </div>
               <dl className="mx-6 mt-4 space-y-1.5 font-mono text-[10px]">
-                {[['FIELD', 'Healthcare AI'], ['DEGREE', 'M.S. AI Systems'], ['BASE', 'United States']].map(([k, v]) => (
+                {[['FIELD', 'Applied AI'], ['DEGREE', 'M.S. AI Systems'], ['BASE', 'United States']].map(([k, v]) => (
                   <div key={k} className="flex justify-between border-b border-dashed border-ink/15 pb-1"><dt className="text-faint">{k}</dt><dd>{v}</dd></div>
                 ))}
               </dl>

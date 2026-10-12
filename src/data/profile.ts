@@ -2,10 +2,10 @@ export const profile = {
   name: 'Abraar Khan',
   handle: 'abraar64mak',
   location: 'United States',
-  specialization: 'AI Systems & Healthcare Analytics',
-  roles: ['Clinical RAG Engineer', 'Agentic Systems Builder', 'ECG Deep Learning Researcher', 'Healthcare AI Author'],
+  specialization: 'AI Systems & Applied ML',
+  roles: ['ML & AI Systems Engineer', 'RAG & Agent Builder', 'Document Intelligence Engineer', 'Healthcare AI Researcher'],
   summary:
-    'Machine learning engineer bridging artificial intelligence and medical healthcare research. From streaming ECG inference on wearables to physician-graded RAG over Medicaid charts, I build AI that clinicians can trust: secure by design, measured honestly, shipped to production.',
+    'Machine learning engineer shipping production AI: RAG, agentic and document-intelligence systems, and real-time models. Healthcare is my home turf, from streaming ECG inference to physician-graded clinical RAG, and the craft applies anywhere AI ships.',
   // Privacy: no phone number is stored or displayed anywhere in this project.
   email: 'abraar.farooqali@gmail.com',
   cvProfile: [

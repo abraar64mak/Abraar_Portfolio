@@ -8,8 +8,9 @@ Turn the Google Flow intro clip into a seamless looping hero video with a TRANSP
     .venv/bin/python scripts/build-hero-assets.py intro.mp4 --photo me.jpg             # ID-card portrait from a photo
 
 Outputs (into ./public):
-    hero/hero.webm   VP9 with alpha channel + Opus   (Chrome, Edge, Firefox, Android)
-    hero/hero.mp4    H.264 on white + AAC            (Safari/iOS fallback; the page blends it into the background)
+    hero/hero.webm   VP9 with alpha channel   (Chrome, Edge, Firefox, Android)
+    hero/hero.mp4    H.264 on white           (Safari/iOS fallback; the page blends it into the background)
+Both are silent by default (pass --voice to keep the audio track). The page shows chat-style messages beside him instead.
     portrait-bust.webp   480x600 ID-card portrait    (only if you pass --photo, or none exists yet)
     og.jpg               1200x630 social preview
 
@@ -97,6 +98,7 @@ def main():
     ap.add_argument("video")
     ap.add_argument("--crop", help="w:h:x:y crop box in source pixels")
     ap.add_argument("--photo", help="photo for the ID-card portrait")
+    ap.add_argument("--voice", action="store_true", help="keep the voice (default: the hero is silent, with chat-style messages on the page)")
     a = ap.parse_args()
     try:
         from rembg import new_session, remove
@@ -155,7 +157,7 @@ def main():
 
         # 4. sound: same cross-fade, sample-accurate
         sound = None
-        if audio is not None:
+        if audio is not None and a.voice:
             s = audio[: int(round(n / fps * SR))]
             k = int(round(xf / fps * SR))
             wgt = np.linspace(0, 1, k, dtype=np.float32)
