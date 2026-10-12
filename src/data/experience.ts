@@ -114,7 +114,7 @@ export const experience: Experience[] = [
     id: 'anna',
     org: 'Anna University',
     role: 'B.Tech in Artificial Intelligence & Machine Learning',
-    period: '',
+    period: '2020 – 2024',
     location: 'Chennai, India',
     kind: 'academic',
     summary: 'Undergraduate degree in AI & Machine Learning, where two peer-reviewed healthcare AI papers won Best Paper awards at international conferences.',

@@ -10,7 +10,7 @@ const uf = experience.find((e) => e.id === 'uf')!
 export default function About() {
   const facts = [
     ['Location', profile.location],
-    ['Education', `${uf.role.replace('M.S. in ', 'M.S. ')}, University of Florida · B.Tech AI & ML, Anna University`],
+    ['Education', `${uf.role.replace('M.S. in ', 'M.S. ')}, University of Florida · B.Tech AI & ML, Anna University (2020–2024)`],
     ['Currently', `${cdf.role}, ${cdf.org} (${cdf.period.split(' – ')[0]} – present)`],
     ['Email', profile.email],
   ]

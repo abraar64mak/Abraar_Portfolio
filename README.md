@@ -1,54 +1,101 @@
 # Abraar Khan: Healthcare AI Portfolio
 
-A quiet, light, premium portfolio with a **talking 3D-avatar hero**, built for healthcare-AI founders and teams.
-Inspired by the "talking-video portfolio" format, adapted with medical-AI touches: a live ECG lab, clinical RAG and agent-security demos, and real results from the two published papers.
+**Machine learning engineer building clinical-grade AI**: real-time ECG models, secure RAG over patient data, and auditable agentic systems.
 
-**Stack:** React 18 · TypeScript · Vite · Tailwind CSS · Lenis (smooth scroll) · self-hosted fonts (Inter Tight, Instrument Serif, JetBrains Mono). Static site, deploys anywhere.
+M.S. in Artificial Intelligence Systems, University of Florida · B.Tech in AI & Machine Learning, Anna University · Data Scientist at CDF · Based in the United States
 
-## Run
+[LinkedIn](https://www.linkedin.com/in/abraar-khan-ali) · [GitHub](https://github.com/abraar64mak) · [Email](mailto:abraar.farooqali@gmail.com)
+
+![Hero: Abraar's talking-avatar introduction, with a live ECG line and headline results](docs/screenshots/01-hero.jpg)
+
+This repository is the source of my personal portfolio. It is built to be explored rather than scrolled past: a talking avatar introduces me, a lanyard ID card swings and flips, and the **Live lab** lets you try small, working versions of the systems I build.
+
+## What's on the site
+
+### Hello, I'm Abraar
+A swinging, flippable ID card (hover or tap to flip it), plus a short summary and quick facts.
+
+![About section with the lanyard ID card](docs/screenshots/02-about.jpg)
+
+### Skills: the periodic table of my stack
+Every skill from my résumé is an "element" with real brand logos. Filter by family, hover a skill, and see which projects and jobs used it.
+
+![Skills periodic table with an inspector panel](docs/screenshots/03-skills.jpg)
+
+### Selected work
+Five projects in an expanding gallery. Hover a panel to open it. The two published papers show their real result tables as interactive charts.
+
+![Project gallery with BeatNet open](docs/screenshots/04-work.jpg)
+
+| Project | What it is |
+| --- | --- |
+| **BeatNet** | Real-time single-lead ECG fiducial detection and cardiac classification (1D U-Net and transformer pipeline) |
+| **Fetal Health Prediction** | CNN study across layer depths. **Best Paper**, IConIC 2K23 · [AIP Conference Proceedings](https://pubs.aip.org/aip/acp/article-abstract/3175/1/020058/3339024/AI-in-healthcare-Predicting-the-fetus-health-using?redirectedFrom=PDF) |
+| **Multi-Agent Data Assistant** | LangGraph and MCP NL-to-SQL agents behind a sqlglot AST firewall: 100% adversarial refusal across 65 attack tests · [GitHub](https://github.com/abraar64mak/mcp-data-assistant) |
+| **Transformer Document Intelligence** | Fine-tuned RoBERTa NER at scale on PySpark: 0.916 strict entity F1 on 3,453 CoNLL-2003 test samples · [GitHub](https://github.com/abraar64mak/document-intelligence-platform) |
+| **AI Quantification of Exercise Form** | MediaPipe pose estimation and classifiers for injury prevention. **Best Paper**, ICCCNet 2023 · [Springer](https://link.springer.com/chapter/10.1007/978-981-97-0892-5_50) |
+
+### Live lab: don't take my word, try it
+Interactive demos of the ideas behind my work: inject an arrhythmia and watch the ECG landmark detector react, compare keyword vs vector vs hybrid retrieval with PHI masking, attack a SQL firewall, and tag entities in clinical text.
+
+![Live lab: ECG landmark detection and rhythm classification](docs/screenshots/05-lab.jpg)
+
+> The lab demos run on synthetic data with simple rules, and they say so on screen. They illustrate the systems; they are not runs of the production models.
+
+### Experience, achievements, contact
+Education and experience as one path that draws as you scroll, then a pinned horizontal gallery of results with count-up numbers.
+
+![Achievements gallery](docs/screenshots/06-achievements.jpg)
+
+## Highlights from my work
+
+- **Clinical RAG at CDF:** cut Medicaid chart review 25% (about 15 hours a week) and raised retrieval accuracy from 72% to 88% across 50K+ forms with hybrid keyword and FAISS search; physician-graded evaluation lifted answer reliability to 93%.
+- **PHI safety:** guardrails that mask PHI and verify medical terms protect 60K+ patient lookups.
+- **Wearable cardiac AI at Aventusoft:** streaming ECG inference in PyTorch; arrhythmia F1 up 14% and AUC up 11% by synthesizing rare-class waveforms; IEC 62304-compliant CI/CD release gates.
+- **Published research:** 2× Best Paper awards for peer-reviewed healthcare AI (ICCCNet 2023, Springer LNNS; IConIC 2K23, AIP).
+
+## Tech stack
+
+React 18 · TypeScript · Vite · Tailwind CSS · Framer Motion · Lenis (smooth scroll) · Lucide icons · simple-icons (brand logos).
+Fonts (Inter Tight, Instrument Serif, JetBrains Mono) are self-hosted. There are no external scripts or image CDNs at runtime.
+
+Built with care for accessibility: semantic sections, keyboard focus styles, reduced-motion support, and a layout that works from 360 px to 1920 px.
+
+## Run it locally
+
+You need [Node.js](https://nodejs.org) 18 or newer.
 
 ```bash
+git clone https://github.com/abraar64mak/Abraar_Portfolio.git
+cd Abraar_Portfolio
 npm install
-npm run dev        # http://localhost:5173
-npm run build      # type-check + production build -> dist/
-npm run preview
+npm run dev          # http://localhost:5173
 ```
 
-## Hero video (current) and photo (fallback)
+```bash
+npm run build        # type-check and production build into dist/
+npm run preview      # serve the production build locally
+```
 
-The hero plays `public/hero/hero.webm` (transparent background, with sound; Safari uses `hero.mp4`). Rebuild it from any new clip with `scripts/build-hero-assets.py` (setup at the top of that file). If the video files are missing, the page falls back to the animated photo below.
+`dist/` is a plain static site, so it deploys anywhere (Vercel, Netlify, GitHub Pages).
 
-### Animated photo
+## Project structure
 
-The hero shows a cut-out of Abraar (`public/hero/me.webp`) that breathes and tilts toward the cursor. To use a different photo, run `scripts/cutout-portrait.py` (instructions are at the top of that file).
+```
+src/
+├── data/          all content: profile, experience, projects, skills, papers, chart data
+├── components/    page sections, ID card, hero player, lab demos (components/demos), charts
+├── lib/           smooth-scroll and scroll hooks
+└── hooks/         reduced-motion helper
+public/hero/       hero video (hero.webm with transparency, hero.mp4 for Safari) and photo fallback
+scripts/           build-hero-assets.py (loops and cuts out the hero video), cutout-portrait.py
+docs/              screenshots and notes
+```
 
-## Add your avatar video (optional)
+## Credits
 
-If you add `public/hero/hero.mp4` it replaces the photo in the hero. Follow **[docs/AVATAR_GUIDE.md](docs/AVATAR_GUIDE.md)**: three steps with ready-to-paste prompts (male voice, your intro line) and one command that builds the seamless loop.
+Brand logos from [simple-icons](https://simpleicons.org) (CC0), shown in their official colours. Icons by [Lucide](https://lucide.dev).
 
-## Sections
+## Copyright
 
-| # | Section | Idea |
-| - | ------- | ---- |
-| – | Hero | Talking-avatar video (loops, sound toggle, pauses off-screen) + ghost name + ECG line + key results |
-| 01 | About | Swinging, flippable lanyard ID card + résumé summary + quick facts |
-| 02 | Skills | "Periodic table" of every skill on the résumé, family filters, real brand logos, "used in" links |
-| 03 | Work | Expanding gallery of 5 projects; the two papers show their real result charts |
-| 04 | Live lab | ECG landmark detector, clinical RAG, SQL firewall, entity tagger, pipeline (simulations) |
-| 05 | Experience | Education + experience as one scroll-drawn path |
-| 06 | Achievements | Pinned horizontal gallery with count-up numbers |
-| 07 | Contact | Email (copy), LinkedIn, GitHub. No phone number is shown anywhere |
-
-There is no Certifications section because the résumé lists none.
-
-## Editing content
-
-All content is in `src/data/`: `profile.ts`, `experience.ts`, `projects.ts`, `skills.ts`, `papers.ts`, `charts.ts`.
-There is no résumé download on the site.
-
-## Notes
-
-- **Honesty:** the Live lab demos run on synthetic data with simple rules and say so on screen. They illustrate the systems and are not runs of the real models. The project visuals in the Work gallery are labelled "Illustrative UI"; the paper charts are transcribed from the papers.
-- **Logos:** brand marks come from [simple-icons](https://simpleicons.org) (CC0) in their official colours. Marks for concepts (RAG, MCP, AWS, Azure…) are Lucide line icons.
-- **Colour:** white, black and grays. The Live lab is a single dark, rounded "instrument" card, and its status colours are the one deliberate exception.
-- **Paper links:** the Work gallery buttons for the two papers open the AIP and Springer pages (set in `src/data/projects.ts`).
+© Abraar Khan. The photos, avatar, video and written content are mine and are not licensed for reuse. You are welcome to take inspiration from the layout and ideas.

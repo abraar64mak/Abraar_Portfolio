@@ -6,7 +6,7 @@ const BACK = [
   'M.S. Artificial Intelligence Systems, University of Florida',
   'Data Scientist at CDF: clinical RAG for Medicaid charts',
   'Built BeatNet, a Multi-Agent Data Assistant and a Document Intelligence Platform',
-  'B.Tech AI & ML, Anna University',
+  'B.Tech AI & ML, Anna University (2020–2024)',
   '2× Best Paper: ICCCNet 2023 (Springer), IConIC 2K23 (AIP)',
 ]
 
