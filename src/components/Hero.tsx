@@ -4,7 +4,6 @@ import Counter from './Counter'
 import EcgLine from './EcgLine'
 import HeroHalo from './HeroHalo'
 import LivingPortrait from './LivingPortrait'
-import { profile } from '../data/profile'
 import { scrollToTarget } from '../lib/scroll'
 
 const base = import.meta.env.BASE_URL
@@ -117,7 +116,6 @@ export default function Hero() {
           <div className="rv mt-7 flex flex-wrap gap-3" style={{ ['--i' as string]: 4 }}>
             <a href="#work" onClick={(e) => { e.preventDefault(); scrollToTarget('work') }} className="pill pill-solid">Explore work</a>
             <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToTarget('contact') }} className="pill pill-line">Let’s talk</a>
-            <a href={`${base}${profile.resume}`} download className="pill pill-line">Résumé ↓</a>
           </div>
         </div>
 

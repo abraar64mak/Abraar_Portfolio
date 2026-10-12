@@ -3,9 +3,10 @@ import { experience } from '../data/experience'
 import { useScrollProgress } from '../lib/hooks'
 import SectionHead from './SectionHead'
 
-const ORDER = ['plumb5', 'anna', 'uf', 'aventusoft', 'cdf']
+const ORDER = ['anna', 'plumb5', 'uf', 'aventusoft', 'cdf']
 const items = ORDER.map((id) => experience.find((e) => e.id === id)!)
 const when = (p: string) => p.replace(/ – /g, ' → ')
+const label = (e: { period: string; kind: string }) => [when(e.period), e.kind === 'academic' ? 'Education' : 'Experience'].filter(Boolean).join(' · ')
 
 export default function Experience() {
   const [ref, p] = useScrollProgress<HTMLDivElement>()
@@ -25,7 +26,7 @@ export default function Experience() {
               return (
                 <li key={e.id} className="rv relative pl-12 md:pl-16">
                   <span aria-hidden className={`absolute left-0 top-1.5 h-6 w-6 rounded-full border-2 transition-all duration-500 md:h-8 md:w-8 ${lit ? 'scale-100 border-ink bg-ink' : 'border-line bg-paper'}`} />
-                  <p className="font-mono text-xs text-mute">{when(e.period)} · {e.kind === 'academic' ? 'Education' : 'Experience'}</p>
+                  <p className="font-mono text-xs text-mute">{label(e)}</p>
                   <h3 className={`mt-1 text-2xl font-bold tracking-tight transition-colors duration-500 sm:text-3xl ${lit ? 'text-ink' : 'text-faint'}`}>{e.role}</h3>
                   <p className="mt-0.5 text-ink2">{e.org} <span className="text-mute">· {e.location}</span></p>
                   <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink2">{e.summary}</p>

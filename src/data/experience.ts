@@ -113,13 +113,14 @@ export const experience: Experience[] = [
   {
     id: 'anna',
     org: 'Anna University',
-    role: 'Undergraduate Researcher · AI & Machine Learning',
-    period: '2023',
+    role: 'B.Tech in Artificial Intelligence & Machine Learning',
+    period: '',
     location: 'Chennai, India',
     kind: 'academic',
-    summary: 'Two peer-reviewed healthcare AI papers, both awarded Best Paper at international conferences.',
+    summary: 'Undergraduate degree in AI & Machine Learning, where two peer-reviewed healthcare AI papers won Best Paper awards at international conferences.',
     tags: ['CNN', 'Computer Vision', 'MediaPipe', 'Healthcare ML'],
     highlights: [
+      'B.Tech in Artificial Intelligence and Machine Learning.',
       'Co-authored “AI in healthcare – Predicting the Fetus health using CNN” (IConIC 2K23, AIP Conference Proceedings, Scopus indexed), Best Paper Award.',
       'Co-authored “An Artificial Intelligence Approach to Quantifying Exercise Form for Optimal Performance and Injury Prevention” (ICCCNet 2023, Springer LNNS), Best Paper Award.',
     ],

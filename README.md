@@ -44,7 +44,7 @@ There is no Certifications section because the résumé lists none.
 ## Editing content
 
 All content is in `src/data/`: `profile.ts`, `experience.ts`, `projects.ts`, `skills.ts`, `papers.ts`, `charts.ts`.
-The résumé PDF served by the "Résumé ↓" buttons is `public/Abraar_Khan_CV.pdf`. Replace it when you update your CV.
+There is no résumé download on the site.
 
 ## Notes
 

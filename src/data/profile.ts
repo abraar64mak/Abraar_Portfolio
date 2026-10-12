@@ -8,7 +8,6 @@ export const profile = {
     'Machine learning engineer bridging artificial intelligence and medical healthcare research. From streaming ECG inference on wearables to physician-graded RAG over Medicaid charts, I build AI that clinicians can trust: secure by design, measured honestly, shipped to production.',
   // Privacy: no phone number is stored or displayed anywhere in this project.
   email: 'abraar.farooqali@gmail.com',
-  resume: 'Abraar_Khan_CV.pdf',
   cvProfile: [
     'Software engineer shipping production RAG, agentic, and document intelligence systems in Python and TypeScript.',
     'Built secure FastAPI backends for sensitive data with PostgreSQL Row-Level Security and PHI masking.',

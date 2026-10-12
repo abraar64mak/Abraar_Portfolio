@@ -1,17 +1,16 @@
-import { ArrowUpRight, Download, Github, Linkedin } from 'lucide-react'
+import { ArrowUpRight, Github, Linkedin } from 'lucide-react'
 import { experience } from '../data/experience'
 import { profile } from '../data/profile'
 import IdCard from './IdCard'
 import SectionHead from './SectionHead'
 
-const base = import.meta.env.BASE_URL
 const cdf = experience.find((e) => e.id === 'cdf')!
 const uf = experience.find((e) => e.id === 'uf')!
 
 export default function About() {
   const facts = [
     ['Location', profile.location],
-    ['Education', `${uf.role.replace('M.S. in ', 'M.S. ')}, University of Florida`],
+    ['Education', `${uf.role.replace('M.S. in ', 'M.S. ')}, University of Florida · B.Tech AI & ML, Anna University`],
     ['Currently', `${cdf.role}, ${cdf.org} (${cdf.period.split(' – ')[0]} – present)`],
     ['Email', profile.email],
   ]
@@ -23,8 +22,7 @@ export default function About() {
           <div className="rv order-2 space-y-4 lg:order-1">
             {profile.cvProfile.map((p) => <p key={p} className="text-lg leading-relaxed text-ink2">{p}</p>)}
             <div className="flex flex-wrap gap-3 pt-3">
-              <a href={`${base}${profile.resume}`} download className="pill pill-solid"><Download size={15} />Résumé</a>
-              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="pill pill-line"><Github size={15} />GitHub</a>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="pill pill-solid"><Github size={15} />GitHub</a>
               <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="pill pill-line"><Linkedin size={15} />LinkedIn</a>
             </div>
           </div>
