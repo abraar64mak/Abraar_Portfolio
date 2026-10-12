@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Counter from './Counter'
+import AlphaVideo from './AlphaVideo'
 import EcgLine from './EcgLine'
 import HeroHalo from './HeroHalo'
 import LivingPortrait from './LivingPortrait'
 import SpeechBubbles from './SpeechBubbles'
 import { scrollToTarget } from '../lib/scroll'
 
-const base = import.meta.env.BASE_URL
 const STATS = [
   { to: 88, suffix: '%', label: 'retrieval accuracy', from: 72 },
   { to: 100, suffix: '%', label: 'adversarial refusal' },
@@ -19,7 +19,9 @@ export default function Hero() {
   const video = useRef<HTMLVideoElement>(null)
   const [missing, setMissing] = useState(false)       // no hero video
   const [noPortrait, setNoPortrait] = useState(false) // no cut-out photo either
-  const [vid, setVid] = useState<{ loaded: boolean; alpha: boolean; len: number }>({ loaded: false, alpha: true, len: 7.2 })
+  const [loopSec, setLoopSec] = useState(7.2)
+  const onMeta = useCallback((d: number) => { if (d > 0) setLoopSec(d) }, [])
+  const onFail = useCallback(() => setMissing(true), [])
 
   // the hero is silent: play muted, and pause whenever it is mostly out of view
   useEffect(() => {
@@ -54,23 +56,14 @@ export default function Hero() {
           {!missing ? (
             <>
               <HeroHalo />
-              {/* hero.webm has a transparent background; the Safari fallback hero.mp4 sits on white and is blended in */}
-              <video
-                ref={video} loop muted playsInline preload="auto" aria-label="Abraar, animated"
-                onLoadedData={(e) => setVid({ loaded: true, alpha: e.currentTarget.currentSrc.endsWith('.webm'), len: e.currentTarget.duration || 7.2 })}
-                className={`relative h-full w-full object-contain transition-opacity duration-700 ${vid.loaded ? 'opacity-100' : 'opacity-0'} ${vid.alpha ? '' : 'mix-blend-multiply'}`}
-                style={vid.alpha ? undefined : { maskImage: 'linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)', WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent)' }}
-              >
-                <source src={`${base}hero/hero.webm`} type="video/webm" />
-                <source src={`${base}hero/hero.mp4`} type="video/mp4" onError={() => setMissing(true)} />
-              </video>
+              <AlphaVideo videoRef={video} onMeta={onMeta} onFail={onFail} />
             </>
           ) : noPortrait ? (
             <Placeholder />
           ) : (
             <LivingPortrait onMissing={() => setNoPortrait(true)} />
           )}
-          <SpeechBubbles video={video} follow={!missing} loopSec={vid.len} />
+          <SpeechBubbles video={video} follow={!missing} loopSec={loopSec} />
         </div>
       </div>
 

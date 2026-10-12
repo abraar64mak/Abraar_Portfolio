@@ -87,7 +87,7 @@ src/
 ├── components/    page sections, ID card, hero player, lab demos (components/demos), charts
 ├── lib/           smooth-scroll and scroll hooks
 └── hooks/         reduced-motion helper
-public/hero/       silent hero video (hero.webm with transparency, hero.mp4 for Safari) and photo fallback
+public/hero/       silent hero video (hero.webm and hero.mp4, picture and matte packed side by side) and photo fallback
 scripts/           build-hero-assets.py (cuts out and loops the hero video), cutout-portrait.py
 docs/              screenshots and notes
 ```
