@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Counter from './Counter'
 import AlphaVideo from './AlphaVideo'
-import EcgLine from './EcgLine'
 import HeroHalo from './HeroHalo'
 import LivingPortrait from './LivingPortrait'
 import SpeechBubbles from './SpeechBubbles'
 import { scrollToTarget } from '../lib/scroll'
 
 const STATS = [
-  { to: 88, suffix: '%', label: 'retrieval accuracy', from: 72 },
-  { to: 100, suffix: '%', label: 'adversarial refusal' },
-  { to: 0.916, decimals: 3, label: 'strict entity F1' },
+  { from: 68, to: 1.6, decimals: 1, suffix: '%', label: 'RAG attack success, from 68%' },
+  { to: 99.45, decimals: 2, suffix: '%', label: 'malicious-code detection' },
+  { to: 42, suffix: '%', label: 'inference latency cut' },
   { to: 2, suffix: '×', label: 'Best Paper awards' },
 ]
 
@@ -48,7 +47,6 @@ export default function Hero() {
     <section id="top" ref={root} className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-[72px] sm:pb-14">
       {/* ghost first name */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[9%] select-none text-center font-sans text-[clamp(5rem,24vw,22rem)] font-extrabold uppercase leading-none tracking-tighter" style={{ WebkitTextStroke: '1.5px rgba(13,13,13,.14)', color: 'transparent', transform: 'translate3d(var(--gx,0px), var(--gy,0px), 0)' }}>Abraar</div>
-      <EcgLine className="pointer-events-none absolute inset-x-0 bottom-[22%] hidden h-24 w-full opacity-30 lg:block" />
 
       {/* the talking video: stacked above the text on phones, centred behind it on desktop */}
       <div className="pointer-events-none relative mx-auto flex h-[58svh] w-full items-end justify-center lg:absolute lg:inset-x-0 lg:bottom-0 lg:top-12 lg:h-auto">
@@ -74,7 +72,7 @@ export default function Hero() {
             <span className="rv-mask"><span>ML &amp; AI Systems</span></span>
             <span className="rv-mask" style={{ ['--i' as string]: 1 }}><span><em className="serif-accent">Engineer.</em></span></span>
           </h1>
-          <p className="rv mt-5 max-w-md text-[15px] leading-relaxed text-ink2" style={{ ['--i' as string]: 3 }}>I build production AI, from real-time ECG models to secure RAG and agentic systems. Healthcare is my home turf; the craft applies anywhere AI ships.</p>
+          <p className="rv mt-5 max-w-md text-[15px] leading-relaxed text-ink2" style={{ ['--i' as string]: 3 }}>I build production AI (RAG, agents, real-time models) and I secure it: red-teaming, sandboxing untrusted code and access control for LLM agents.</p>
           <div className="rv mt-7 flex flex-wrap gap-3" style={{ ['--i' as string]: 4 }}>
             <a href="#work" onClick={(e) => { e.preventDefault(); scrollToTarget('work') }} className="pill pill-solid">Explore work</a>
             <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToTarget('contact') }} className="pill pill-line">Let’s talk</a>

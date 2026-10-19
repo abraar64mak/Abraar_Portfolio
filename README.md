@@ -1,62 +1,59 @@
-# Abraar Khan: Healthcare AI Portfolio
+# Abraar Khan: ML & AI Systems Engineer
 
-**Machine learning engineer shipping production AI**: RAG, agentic and document-intelligence systems, and real-time models. Healthcare is my home turf; the craft applies anywhere AI ships.
+**I build production AI (RAG, agentic systems, real-time models) and I secure it**: red-teaming RAG, sandboxing untrusted code, and access control for LLM agents.
 
-M.S. in Artificial Intelligence Systems, University of Florida · B.Tech in AI & Machine Learning, Anna University · Data Scientist at CDF · Based in the United States
+M.S. in Artificial Intelligence Systems, University of Florida · B.Tech in AI & Machine Learning, Anna University · Data Scientist at CDF · Based in the United States · Open to AI roles
 
-[LinkedIn](https://www.linkedin.com/in/abraar-khan-ali) · [GitHub](https://github.com/abraar64mak) · [Email](mailto:abraar.farooqali@gmail.com)
+[LinkedIn](https://www.linkedin.com/in/abraar-khan-ali) · [GitHub](https://github.com/abraar64mak) · [Email](mailto:abraar.farooqali@gmail.com) · [Live site](https://abraar64mak.github.io/Abraar_Portfolio/)
 
-![Hero: animated avatar with chat-style messages, a live ECG line and headline results](docs/screenshots/01-hero.jpg)
+![Hero: animated avatar with chat-style messages and headline results](docs/screenshots/01-hero.jpg)
 
-This repository is the source of my personal portfolio. It is built to be explored rather than scrolled past: an animated avatar introduces me with chat-style messages (no sound), a lanyard ID card swings and flips, and the **Live lab** lets you try small, working versions of the systems I build.
+This repository is the source of my personal portfolio. It is built to be explored rather than scrolled past: an animated avatar introduces me with chat-style messages (no sound), a lanyard ID card swings and flips, and the **Live lab** lets you try small, working versions of the systems I build and secure.
 
 ## What's on the site
 
-### Hello, I'm Abraar
-A swinging, flippable ID card (hover or tap to flip it), plus a short summary and quick facts.
+### About and research interests
+A swinging, flippable ID card (hover or tap to flip it), a short summary, quick facts, and my research interests: cybersecurity for AI and cloud systems, with a focus on securing agentic AI infrastructure (agent sandboxing, secure runtimes for LLM tool use, verifiable AI pipelines).
 
-![About section with the lanyard ID card](docs/screenshots/02-about.jpg)
+![About section with the lanyard ID card and research interests](docs/screenshots/02-about.jpg)
 
 ### Skills: the periodic table of my stack
-Every skill from my résumé is an "element" with real brand logos. Filter by family, hover a skill, and see which projects and jobs used it.
+49 skills as "elements" with real brand logos, grouped into seven families. Hover a skill to see which projects and jobs used it.
 
 ![Skills periodic table with an inspector panel](docs/screenshots/03-skills.jpg)
 
 ### Selected work
-Five projects in an expanding gallery. Hover a panel to open it. The two published papers show their real result tables as interactive charts.
+Seven projects in an expanding gallery (hover a panel to open it), plus the two published papers with their real result tables.
 
-![Project gallery with BeatNet open](docs/screenshots/04-work.jpg)
+![Project gallery with an open panel and benchmark chart](docs/screenshots/04-work.jpg)
 
 | Project | What it is |
 | --- | --- |
-| **BeatNet** | Real-time single-lead ECG fiducial detection and cardiac classification (1D U-Net and transformer pipeline) · [GitHub](https://github.com/abraar64mak/Beatnet) |
-| **Fetal Health Prediction** | CNN study across layer depths. **Best Paper**, IConIC 2K23 · [AIP Conference Proceedings](https://pubs.aip.org/aip/acp/article-abstract/3175/1/020058/3339024/AI-in-healthcare-Predicting-the-fetus-health-using?redirectedFrom=PDF) |
-| **Multi-Agent Data Assistant** | LangGraph and MCP NL-to-SQL agents behind a sqlglot AST firewall: 100% adversarial refusal across 65 attack tests · [GitHub](https://github.com/abraar64mak/mcp-data-assistant) |
-| **Transformer Document Intelligence** | Fine-tuned RoBERTa NER at scale on PySpark: 0.916 strict entity F1 on 3,453 CoNLL-2003 test samples · [GitHub](https://github.com/abraar64mak/document-intelligence-platform) |
-| **AI Quantification of Exercise Form** | MediaPipe pose estimation and classifiers for injury prevention. **Best Paper**, ICCCNet 2023 · [Springer](https://link.springer.com/chapter/10.1007/978-981-97-0892-5_50) |
+| **SecureAI-RAG** | Red-teaming RAG: 250 poisoned-document attacks in four families, mapped to the OWASP LLM Top 10. A four-stage defense cut attack success from **68.0% to 1.6%** while keeping 96.5% benign utility · [GitHub](https://github.com/abraar64mak/SecureAI-RAG) |
+| **Distributed Code Judge** | Sandboxed execution of untrusted code: a policy-enforcing Docker API proxy, hardened per-test sandboxes, and idempotent at-least-once grading on Kafka and PostgreSQL · [GitHub](https://github.com/abraar64mak/distributed-code-judge) |
+| **Secure Data Sandbox** | A secure RAG-based intelligence sandbox on Linux for the XVIII Airborne Corps (DoD), with sub-150 ms queries and hybrid threat detection that keeps an analyst in the loop |
+| **Multi-Agent Data Assistant** | LangGraph and MCP NL-to-SQL with PostgreSQL row-level security, RBAC and sqlglot AST validation: 75% execution accuracy, 6 of 6 adversarial cases refused, p95 7.6 s · [GitHub](https://github.com/abraar64mak/MCP-DATA-ASSISTANT) |
+| **BeatNet** | Real-time ECG AI on wearable hardware: a 1D U-Net with a TCN bottleneck plus a fine-tuned ECG-FM model over 1.5M+ segments; ONNX cut inference latency 42% · [GitHub](https://github.com/abraar64mak/Beatnet) |
+| **Transformer Document Intelligence** | Fine-tuned RoBERTa NER on distributed PySpark behind FastAPI: 0.9155 strict entity F1 on 3,453 CoNLL-2003 test documents · [GitHub](https://github.com/abraar64mak/document-intelligence-platform) |
+| **Malicious Code Detection** | Undergraduate thesis: a Random Forest reached 99.45% accuracy on malicious URLs and Windows PE headers · [GitHub](https://github.com/abraar64mak/Malicious-Code-Review) |
+
+**Published research:** two Best Paper awards, ICCCNet 2023 ([Springer LNNS](https://link.springer.com/chapter/10.1007/978-981-97-0892-5_50)) and IConIC 2K23 ([AIP Conference Proceedings](https://pubs.aip.org/aip/acp/article-abstract/3175/1/020058/3339024/AI-in-healthcare-Predicting-the-fetus-health-using?redirectedFrom=PDF)).
 
 ### Live lab: don't take my word, try it
-Interactive demos of the ideas behind my work: inject an arrhythmia and watch the ECG landmark detector react, compare keyword vs vector vs hybrid retrieval with PHI masking, attack a SQL firewall, and tag entities in clinical text.
+Interactive demos of the ideas behind my work: poison a RAG system and switch its four defense stages on and off, attack a SQL firewall, tag entities, and watch a signal classifier work.
 
-![Live lab: ECG landmark detection and rhythm classification](docs/screenshots/05-lab.jpg)
+![Live lab: RAG red-team demo](docs/screenshots/05-lab.jpg)
 
-> The lab demos run on synthetic data with simple rules, and they say so on screen. They illustrate the systems; they are not runs of the production models.
+> The lab demos run on synthetic data with simple rules, and they say so on screen. They illustrate the systems; they are not runs of the production models or of the full evaluations.
 
 ### Experience, achievements, contact
-Education and experience as one path that draws as you scroll, then a pinned horizontal gallery of results with count-up numbers.
+Education and experience as one path that draws as you scroll (Anna University, Plumb5, University of Florida, Aventusoft, CDF), then a pinned horizontal gallery of results with count-up numbers.
 
 ![Achievements gallery](docs/screenshots/06-achievements.jpg)
 
-## Highlights from my work
-
-- **Clinical RAG at CDF:** cut Medicaid chart review 25% (about 15 hours a week) and raised retrieval accuracy from 72% to 88% across 50K+ forms with hybrid keyword and FAISS search; physician-graded evaluation lifted answer reliability to 93%.
-- **PHI safety:** guardrails that mask PHI and verify medical terms protect 60K+ patient lookups.
-- **Wearable cardiac AI at Aventusoft:** streaming ECG inference in PyTorch; arrhythmia F1 up 14% and AUC up 11% by synthesizing rare-class waveforms; IEC 62304-compliant CI/CD release gates.
-- **Published research:** 2× Best Paper awards for peer-reviewed healthcare AI (ICCCNet 2023, Springer LNNS; IConIC 2K23, AIP).
-
 ## Tech stack
 
-React 18 · TypeScript · Vite · Tailwind CSS · Framer Motion · Lenis (smooth scroll) · Lucide icons · simple-icons (brand logos).
+React 18 · TypeScript · Vite · Tailwind CSS · Framer Motion · Lenis (smooth scroll) · WebGL (hero video compositing) · Lucide icons · simple-icons (brand logos).
 Fonts (Inter Tight, Instrument Serif, JetBrains Mono) are self-hosted. There are no external scripts or image CDNs at runtime.
 
 Built with care for accessibility: semantic sections, keyboard focus styles, reduced-motion support, and a layout that works from 360 px to 1920 px.
@@ -77,7 +74,7 @@ npm run build        # type-check and production build into dist/
 npm run preview      # serve the production build locally
 ```
 
-`dist/` is a plain static site, so it deploys anywhere. This repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that builds it and publishes it to **GitHub Pages** on every push to `main`.
+`dist/` is a plain static site, so it deploys anywhere. This repo includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that builds it and publishes it to **GitHub Pages**.
 
 ## Project structure
 

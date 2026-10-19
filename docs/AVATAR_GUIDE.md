@@ -48,11 +48,11 @@ In Google Flow, create a video from an **image**: upload your avatar image (the 
 
 **Keep the spoken line short.** Flow clips are typically about 8 seconds, so the line must fit in roughly 7 seconds (about 17 to 20 words). If your plan allows longer clips, you can use a longer line.
 
-**Pick one script (they all describe you as a healthcare AI professional):**
+**Pick one script (they all describe you as an ML and AI engineer):**
 
-1. *(recommended, about 6 s)* "Hi, I'm Abraar, a healthcare AI professional. I build machine learning systems that doctors can trust."
-2. *(about 8 s)* "Hi, I'm Abraar. I'm a healthcare AI professional, building ECG models and secure clinical AI that doctors can trust."
-3. *(shortest, about 4 s)* "Hi, I'm Abraar. I build healthcare AI that doctors can trust."
+1. *(recommended, about 6 s)* "Hi, I'm Abraar, an ML and AI engineer. I build production AI, and I secure it."
+2. *(about 8 s)* "Hi, I'm Abraar. I'm an AI engineer building RAG, agents and real-time models, and securing them."
+3. *(shortest, about 4 s)* "Hi, I'm Abraar. I build production AI, and I secure it."
 
 If the voice mispronounces your name, spell it the way it sounds in the quotes (for example "Ab-raar") and regenerate.
 
@@ -73,10 +73,10 @@ POSE AND POSITION:
 - Only allow natural small movements required for speaking. He may briefly take one hand out of a pocket to gesture, then return it.
 
 PERFORMANCE:
-The character is a healthcare AI professional introducing himself directly to the camera, with a warm, confident, approachable expression.
+The character is an AI engineer introducing himself directly to the camera, with a warm, confident, approachable expression.
 
 EXACT SPOKEN SCRIPT:
-"Hi, I'm Abraar, a healthcare AI professional. I build machine learning systems that doctors can trust."
+"Hi, I'm Abraar, an ML and AI engineer. I build production AI, and I secure it."
 
 VOICE:
 - Natural MALE voice, mid-range. Friendly, confident, professional tone, like a clear and calm engineer speaking to a founder.

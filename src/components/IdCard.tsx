@@ -3,11 +3,11 @@ import { profile } from '../data/profile'
 
 const base = import.meta.env.BASE_URL
 const BACK = [
-  'M.S. Artificial Intelligence Systems, University of Florida',
-  'Data Scientist at CDF: clinical RAG for Medicaid charts',
-  'Built BeatNet, a Multi-Agent Data Assistant and a Document Intelligence Platform',
+  'M.S. AI Systems, University of Florida',
   'B.Tech AI & ML, Anna University (2020–2024)',
-  '2× Best Paper: ICCCNet 2023 (Springer), IConIC 2K23 (AIP)',
+  'Data Scientist at CDF: production RAG',
+  'Built SecureAI-RAG, a sandboxed code judge and BeatNet',
+  '2× Best Paper: ICCCNet 2023, IConIC 2K23',
 ]
 
 export default function IdCard() {
@@ -43,7 +43,7 @@ export default function IdCard() {
     return () => { cancelAnimationFrame(raf); io.disconnect(); host.removeEventListener('pointermove', move) }
   }, [])
 
-  const strap = 'ABRAAR KHAN · ML & AI ENGINEER · '.repeat(3)
+  const strap = 'ABRAAR KHAN · ML & AI ENGINEER · SECURE AI · '.repeat(3)
   return (
     <div ref={stage} className="relative mx-auto flex h-[560px] w-full justify-center overflow-visible">
       <div ref={swing} className="absolute left-1/2 top-0 -ml-[150px] w-[300px]" style={{ transformOrigin: '50% 0' }}>

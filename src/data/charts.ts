@@ -24,4 +24,10 @@ export const charts: Record<string, ChartData> = {
       { name: 'Recall', unit: '%', values: [89.47, 94.73, 89.47, 84.21] },
     ],
   },
+  'malicious-code': {
+    title: 'Model benchmark (70/30 split)',
+    source: 'Capstone thesis',
+    groups: ['Logistic Reg.', 'Decision Tree', 'Random Forest'],
+    metrics: [{ name: 'Accuracy', unit: '%', values: [87.49, 99.04, 99.45] }],
+  },
 }

@@ -2,13 +2,13 @@ import { Check, Loader2, ShieldAlert, ShieldCheck, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 type Role = 'analyst' | 'auditor'
-const TABLES: Record<Role, string[]> = { analyst: ['patients_summary', 'visits', 'claims'], auditor: ['patients_summary', 'visits', 'claims', 'audit_log'] }
+const TABLES: Record<Role, string[]> = { analyst: ['accounts_summary', 'orders', 'invoices'], auditor: ['accounts_summary', 'orders', 'invoices', 'audit_log'] }
 const PRESETS = [
-  { label: 'Valid read', sql: 'SELECT visit_date, dx_code FROM visits WHERE dx_code = \'F32.1\' LIMIT 5' },
-  { label: 'DROP TABLE', sql: 'DROP TABLE patients_summary' },
-  { label: 'Injection', sql: "SELECT * FROM visits WHERE id = 1 OR 1=1; DELETE FROM claims" },
+  { label: 'Valid read', sql: 'SELECT order_date, status FROM orders WHERE status = \'shipped\' LIMIT 5' },
+  { label: 'DROP TABLE', sql: 'DROP TABLE accounts_summary' },
+  { label: 'Injection', sql: "SELECT * FROM orders WHERE id = 1 OR 1=1; DELETE FROM invoices" },
   { label: 'Unauthorized table', sql: 'SELECT user, action FROM audit_log LIMIT 10' },
-  { label: 'Unbounded scan', sql: 'SELECT * FROM claims' },
+  { label: 'Unbounded scan', sql: 'SELECT * FROM invoices' },
 ]
 const WRITE = /\b(insert|update|delete|drop|alter|truncate|create|grant|revoke|merge|exec)\b/i
 const INJECT = /(--|\/\*|\bor\b\s+1\s*=\s*1|\bunion\b\s+select|;\s*\S)/i
@@ -27,8 +27,8 @@ function evaluate(sql: string, role: Role) {
   ]
   const firstFail = checks.findIndex((c) => c.fail)
   let rewritten = s.replace(/;\s*$/, '')
-  if (/\bwhere\b/i.test(rewritten)) rewritten = rewritten.replace(/\bwhere\b/i, "WHERE tenant_id = 'clinic_a' AND")
-  else rewritten = /\b(order by|group by|limit)\b/i.test(rewritten) ? rewritten.replace(/\b(order by|group by|limit)\b/i, "WHERE tenant_id = 'clinic_a' $1") : `${rewritten} WHERE tenant_id = 'clinic_a'`
+  if (/\bwhere\b/i.test(rewritten)) rewritten = rewritten.replace(/\bwhere\b/i, "WHERE tenant_id = 'acme' AND")
+  else rewritten = /\b(order by|group by|limit)\b/i.test(rewritten) ? rewritten.replace(/\b(order by|group by|limit)\b/i, "WHERE tenant_id = 'acme' $1") : `${rewritten} WHERE tenant_id = 'acme'`
   return { checks, firstFail, rewritten }
 }
 
