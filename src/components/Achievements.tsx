@@ -1,4 +1,4 @@
-import { Award, BookOpen, Bug, Search, ShieldAlert, ShieldCheck, Tags, Zap } from 'lucide-react'
+import { Award, BookOpen, Clock, Search, ShieldCheck, Tags, Lock } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import Counter from './Counter'
 
@@ -6,12 +6,11 @@ interface A { icon: typeof Award; label: string; caption: string; detail: string
 const ITEMS: A[] = [
   { icon: Award, label: 'Best Paper Award', caption: 'ICCCNet 2023 · Springer LNNS', detail: 'Quantifying exercise form with AI', from: 2000, to: 2023 },
   { icon: BookOpen, label: 'Best Paper Award', caption: 'IConIC 2K23 · AIP Proceedings', detail: 'Predicting fetal health using CNN', from: 2000, to: 2023 },
-  { icon: ShieldAlert, label: 'RAG attack success', caption: 'SecureAI-RAG · 250 attacks, 4 families', detail: 'Down from 68.0% with a four-stage defense; 96.5% benign utility kept', from: 68, to: 1.6, decimals: 1, suffix: '%' },
-  { icon: Bug, label: 'Malicious-code detection', caption: 'Capstone thesis · Random Forest', detail: '99.31% precision and 98.42% recall on malicious URLs and PE headers', to: 99.45, decimals: 2, suffix: '%' },
-  { icon: Zap, label: 'Inference latency cut', caption: 'Streaming ECG service · ONNX', detail: 'Plus +14% arrhythmia F1 and +11% AUC from rebalanced training data', to: 42, suffix: '%' },
-  { icon: Search, label: 'Retrieval accuracy', caption: 'Hybrid keyword + FAISS search', detail: 'Across 50K+ forms, up from 72%', to: 88, suffix: '%' },
-  { icon: ShieldCheck, label: 'Adversarial refusal', caption: 'Multi-agent data assistant', detail: '6 of 6 benchmark cases refused; 65 firewall attack tests blocked', to: 100, suffix: '%' },
-  { icon: Tags, label: 'Strict entity F1', caption: 'Fine-tuned RoBERTa', detail: '3,453 CoNLL-2003 test documents', to: 0.9155, decimals: 4 },
+  { icon: Search, label: 'Retrieval accuracy', caption: 'Hybrid keyword + FAISS search', detail: 'Across 50K+ clinical forms, up from 72%', to: 88, suffix: '%' },
+  { icon: ShieldCheck, label: 'Adversarial refusal', caption: 'Multi-agent data assistant', detail: 'All writes, injections and unauthorized reads blocked in 65 tests', to: 100, suffix: '%' },
+  { icon: Tags, label: 'Strict entity F1', caption: 'Fine-tuned RoBERTa', detail: '3,453 CoNLL-2003 test samples', to: 0.916, decimals: 3 },
+  { icon: Lock, label: 'Patient lookups protected', caption: 'PHI masking guardrails', detail: 'Leakage prevented across every lookup', to: 60, suffix: 'K+' },
+  { icon: Clock, label: 'Chart-review time saved', caption: 'Clinical RAG summarization', detail: '≈15 hours saved weekly on Medicaid chart review', to: 25, suffix: '%' },
 ]
 
 export default function Achievements() {

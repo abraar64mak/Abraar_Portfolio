@@ -21,7 +21,7 @@ export interface Project {
   id: string
   title: string
   subtitle: string
-  category: 'AI Security' | 'Secure Systems' | 'Agentic AI' | 'Real-time ML' | 'Document AI' | 'Security ML'
+  category: 'Cardiac AI' | 'Healthcare ML' | 'Agentic AI' | 'Document AI' | 'Publication'
   blurb: string
   tags: string[]
   metrics: Metric[]
@@ -31,5 +31,5 @@ export interface Project {
   badge?: string
 }
 
-export type Family = 'Languages' | 'AI Systems' | 'Backend & Data' | 'Systems & Networking' | 'Cloud & DevOps' | 'Security' | 'AI-Assisted Dev'
+export type Family = 'Languages' | 'AI & LLM Systems' | 'Backend & Data' | 'Cloud & DevOps' | 'AI-Assisted Dev'
 export interface Skill { name: string; family: Family; symbol: string; note: string }

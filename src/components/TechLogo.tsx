@@ -1,25 +1,22 @@
-import { siApachekafka, siApachespark, siC, siChartdotjs, siClaude, siCursor, siDocker, siFastapi, siGit, siGithubactions, siGnubash, siHuggingface, siJavascript, siLangchain, siLinux, siOnnx, siOpenjdk, siOpentelemetry, siPostgresql, siPython, siPytorch, siScikitlearn, siTypescript } from 'simple-icons'
-import { Bot, Boxes, Braces, Bug, Cable, ClipboardCheck, Cloud, Cpu, Database, FileCode, FileSearch, Gauge, KeyRound, Layers, Lock, LockKeyhole, Network, Plug, ScanSearch, Share2, ShieldCheck, Swords, Terminal, Webhook, Workflow, type LucideIcon } from 'lucide-react'
+import { siClaude, siCursor, siDocker, siFastapi, siGithubactions, siGnubash, siHuggingface, siJavascript, siLangchain, siPostgresql, siPython, siPytorch, siApachespark, siTypescript, siChartdotjs, siOpentelemetry } from 'simple-icons'
+import { Bot, Boxes, Braces, ClipboardCheck, Cloud, Database, FileSearch, Gauge, Network, Plug, ScanSearch, ShieldCheck, Webhook, Workflow, type LucideIcon } from 'lucide-react'
 
 interface Brand { path: string; hex: string }
 const b = (i: { path: string; hex: string }): Brand => ({ path: i.path, hex: i.hex })
 
 /** Real brand marks (simple-icons, CC0). Colours are the official brand colours. */
 const BRAND: Record<string, Brand> = {
-  Python: b(siPython), TypeScript: b(siTypescript), JavaScript: b(siJavascript), Bash: b(siGnubash), C: b(siC), Java: b(siOpenjdk),
-  PyTorch: b(siPytorch), 'scikit-learn': b(siScikitlearn), 'Hugging Face Transformers': b(siHuggingface), LangGraph: b(siLangchain), ONNX: b(siOnnx),
-  FastAPI: b(siFastapi), PostgreSQL: b(siPostgresql), PySpark: b(siApachespark),
-  Linux: b(siLinux), Git: b(siGit), Docker: b(siDocker), Kafka: b(siApachekafka),
-  'GitHub Actions': b(siGithubactions), OpenTelemetry: b(siOpentelemetry),
-  'Claude Code': b(siClaude), Cursor: b(siCursor), 'Chart.js': b(siChartdotjs),
+  Python: b(siPython), TypeScript: b(siTypescript), JavaScript: b(siJavascript), Bash: b(siGnubash),
+  PyTorch: b(siPytorch), 'Hugging Face Transformers': b(siHuggingface), LangGraph: b(siLangchain),
+  FastAPI: b(siFastapi), PostgreSQL: b(siPostgresql), PySpark: b(siApachespark), Docker: b(siDocker),
+  'GitHub Actions': b(siGithubactions), 'Claude Code': b(siClaude), Cursor: b(siCursor),
+  'Chart.js': b(siChartdotjs), OpenTelemetry: b(siOpentelemetry),
 }
 /** Concepts have no brand: thin line icons in the same visual weight. */
 const CONCEPT: Record<string, LucideIcon> = {
   SQL: Database, MCP: Plug, RAG: FileSearch, FAISS: ScanSearch, Agents: Bot, 'LLM Evaluation': ClipboardCheck, Ragas: Gauge,
-  'REST APIs': Webhook, 'JSON Schema': Braces, 'Vector Databases': Boxes, 'Data Pipelines': Workflow,
-  'Shell Scripting': Terminal, SSH: KeyRound, 'TCP/IP': Network, WebSockets: Cable, 'Connection Pooling': Layers, 'Distributed Systems': Share2,
-  AWS: Cloud, Azure: Cloud, 'CI/CD': Workflow, HPC: Cpu,
-  'RBAC/RLS': ShieldCheck, 'Agent Access Control': Lock, 'AST Query Validation': FileCode, 'Adversarial Evaluation': Swords, 'Malware Detection': Bug, 'Trusted Execution': LockKeyhole,
+  'REST APIs': Webhook, 'JSON Schema': Braces, 'Vector Databases': Boxes, 'Distributed Systems': Network,
+  AWS: Cloud, Azure: Cloud, 'CI/CD': Workflow, 'RBAC/RLS': ShieldCheck,
 }
 export const isBrand = (n: string) => n in BRAND
 

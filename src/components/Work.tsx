@@ -3,21 +3,10 @@ import { useEffect, useState } from 'react'
 import { projects } from '../data/projects'
 import SectionHead from './SectionHead'
 import TechLogo, { isBrand } from './TechLogo'
-import { AgentVisual, BeatNetVisual, DocVisual, MaliciousVisual, SandboxPipelineVisual, SandboxVisual, SecureRagVisual } from './work/visuals'
-import Publications from './Publications'
+import { AgentVisual, BeatNetVisual, DocVisual, PaperVisual } from './work/visuals'
 
-const visual = (id: string) => {
-  switch (id) {
-    case 'secureai-rag': return <SecureRagVisual />
-    case 'distributed-code-judge': return <SandboxVisual />
-    case 'secure-sandbox': return <SandboxPipelineVisual />
-    case 'mcp-data-assistant': return <AgentVisual />
-    case 'beatnet': return <BeatNetVisual />
-    case 'document-intelligence': return <DocVisual />
-    case 'malicious-code': return <MaliciousVisual />
-    default: return null
-  }
-}
+const visual = (id: string) =>
+  id === 'beatnet' ? <BeatNetVisual /> : id === 'mcp-data-assistant' ? <AgentVisual /> : id === 'document-intelligence' ? <DocVisual /> : <PaperVisual id={id as 'fetal-health' | 'exercise-form'} />
 
 export default function Work() {
   const [open, setOpen] = useState(0)
@@ -35,14 +24,14 @@ export default function Work() {
     <section id="work" className="section">
       <div className="wrap">
         <SectionHead tag="03 — Selected work" title="Things I’ve" accent="built." className="mb-12" />
-        <div className="flex flex-col gap-3 lg:h-[min(84svh,700px)] lg:flex-row">
+        <div className="flex flex-col gap-3 lg:h-[min(78svh,620px)] lg:flex-row">
           {projects.map((p, i) => {
             const on = open === i
             return (
               <article
                 key={p.id}
                 onMouseEnter={() => hoverable() && setOpen(i)}
-                className={`rv relative overflow-hidden rounded-[26px] bg-white shadow-[inset_0_0_0_1px_rgba(13,13,13,.1)] transition-[flex-grow,box-shadow] duration-700 lg:min-w-0 ${on ? 'lg:flex-[11] shadow-[inset_0_0_0_1px_rgba(13,13,13,.1),0_30px_70px_-30px_rgba(0,0,0,.25)]' : 'lg:flex-1'}`}
+                className={`rv relative overflow-hidden rounded-[26px] bg-white shadow-[inset_0_0_0_1px_rgba(13,13,13,.1)] transition-[flex-grow,box-shadow] duration-700 lg:min-w-0 ${on ? 'lg:flex-[8] shadow-[inset_0_0_0_1px_rgba(13,13,13,.1),0_30px_70px_-30px_rgba(0,0,0,.25)]' : 'lg:flex-1'}`}
                 style={{ transitionTimingFunction: 'var(--ease)', ['--i' as string]: i }}
               >
                 {/* spine / header */}
@@ -59,7 +48,7 @@ export default function Work() {
                     <p className="mt-1.5 text-sm text-mute">{p.subtitle}</p>
                     <p className="mt-4 text-[15px] leading-relaxed text-ink2">{p.blurb}</p>
                     <ul className="mt-4 grid gap-x-5 gap-y-2 text-[13px] text-ink2 sm:grid-cols-2">
-                      {p.highlights.slice(0, 3).map((h) => <li key={h} className="flex gap-2"><span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-ink" /><span>{h}</span></li>)}
+                      {p.highlights.map((h) => <li key={h} className="flex gap-2"><span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-ink" /><span>{h}</span></li>)}
                     </ul>
                     <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-5">
                       {p.tags.slice(0, 6).map((t) => <span key={t} className="inline-flex items-center gap-1.5 rounded-full bg-paper px-2.5 py-1 font-mono text-[11px] shadow-[inset_0_0_0_1px_rgba(13,13,13,.08)]">{isBrand(t) && <TechLogo name={t} size={12} />}{t}</span>)}
@@ -76,7 +65,6 @@ export default function Work() {
             )
           })}
         </div>
-        <Publications />
       </div>
     </section>
   )
